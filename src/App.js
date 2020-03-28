@@ -1,10 +1,13 @@
 import React from 'react'
+import { Container } from 'reactstrap'
+import TemperatureChart from './charts/temperature'
 
-const App = () => (
-  <>
-    <h1>Hello</h1>
-    <h2>World!</h2>
-  </>
-)
+const App = () => {
+  return (
+    <Container>
+      <TemperatureChart />
+    </Container>
+  )
+}
 
 export default App
