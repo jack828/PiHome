@@ -1,8 +1,10 @@
 import React from 'react'
-import { Admin } from 'react-admin'
-import jsonServerProvider from 'ra-data-json-server'
 
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com')
-const App = () => <Admin dataProvider={dataProvider} />
+const App = () => (
+  <>
+    <h1>Hello</h1>
+    <h2>World!</h2>
+  </>
+)
 
 export default App
