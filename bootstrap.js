@@ -3,15 +3,24 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 const initRoutes = require('./routes')
+const initDatabase = require('./services/database')
+const config = require('./config.json')
 
 const bootstrap = done => {
   app.use(morgan('dev'))
 
-  initRoutes(serviceLocator, app)
+  serviceLocator.register('config', config)
+  serviceLocator.register('logger', console)
 
-  serviceLocator.register('router', app)
+  initDatabase(serviceLocator, error => {
+    if (error) return done(error)
 
-  done(null, serviceLocator)
+    initRoutes(serviceLocator, app)
+
+    serviceLocator.register('router', app)
+
+    done(null, serviceLocator)
+  })
 }
 
 module.exports = bootstrap
