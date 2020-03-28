@@ -4,7 +4,7 @@ import TemperatureChart from './charts/temperature'
 
 const App = () => {
   return (
-    <Container>
+    <Container style={{ margin: '24px' }}>
       <TemperatureChart />
     </Container>
   )
