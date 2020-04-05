@@ -1,13 +1,12 @@
 const serviceLocator = require('service-locator')()
 const express = require('express')
-const morgan = require('morgan')
 const app = express()
 const initRoutes = require('./routes')
+const initMiddleware = require('./middleware')
 const initDatabase = require('./services/database')
 const config = require('./config.json')
 
 const bootstrap = done => {
-  app.use(morgan('dev'))
 
   serviceLocator.register('config', config)
   serviceLocator.register('logger', console)
@@ -15,6 +14,7 @@ const bootstrap = done => {
   initDatabase(serviceLocator, error => {
     if (error) return done(error)
 
+    initMiddleware(serviceLocator, app)
     initRoutes(serviceLocator, app)
 
     serviceLocator.register('router', app)
