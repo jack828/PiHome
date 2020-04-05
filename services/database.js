@@ -12,6 +12,7 @@ const init = (serviceLocator, done) => {
     )
   }
   const { database } = mongodbUri.parse(connectionUri)
+  console.log('Connecting to DB, ', connectionUri)
   MongoClient.connect(
     connectionUri,
     {
