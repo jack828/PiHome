@@ -3,8 +3,21 @@ import { Container } from 'reactstrap'
 import { Line } from 'react-chartjs-2'
 import moment from 'moment'
 
+const formatData = raw =>
+  raw.map(({ createdDate, temperature }) => ({ x: new Date(createdDate), y: temperature }))
+
 const TemperatureChartContainer = () => {
-  const loadData = async () => {}
+  const loadData = async () => {
+    const res = await fetch('/api/temperature/1/1')
+    if (res.status !== 200) {
+      return // some error
+    }
+    const { results: rawData } = await res.json()
+    console.log(rawData)
+    const formattedData = formatData(rawData)
+    console.log(formattedData)
+    setData(formattedData)
+  }
 
   const d = s =>
     moment()
@@ -13,8 +26,13 @@ const TemperatureChartContainer = () => {
 
   useEffect(() => {
     loadData()
-  })
-  const data = [{ x: d(0), y: 10 }, { x: d(1), y: 13 }, { x: d(2), y: 12 }]
+  }, [])
+
+  const [data, setData] = useState([
+    { x: d(0), y: 10 },
+    { x: d(1), y: 13 },
+    { x: d(2), y: 12 }
+  ])
 
   return (
     <Container>
