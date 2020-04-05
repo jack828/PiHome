@@ -17,6 +17,7 @@
     "@testing-library/user-event": "^7.1.2",
     "chart.js": "^2.9.3",
     "express": "^4.17.1",
+    "hat": "^0.0.3",
     "mongodb": "^3.5.5",
     "mongodb-uri": "^0.9.7",
     "morgan": "^1.10.0",
