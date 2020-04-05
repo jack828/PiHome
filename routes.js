@@ -6,6 +6,12 @@ const initRoutes = (serviceLocator, app) => {
     res.sendStatus(418)
   })
 
+  app.get('/node/:identifier', async (req, res) => {
+    const { identifier } = req.params
+    console.log(`[ NODE ]: Identifying node "${identifier}"`)
+    res.sendStatus(418)
+  })
+
   app.get('/api/:collectionName/:from/:to', async (req, res) => {
     const { collectionName, from, to } = req.params
     const collection = serviceDatabase.collection(collectionName)
