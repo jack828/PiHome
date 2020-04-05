@@ -6,7 +6,7 @@ const initRoutes = (serviceLocator, app) => {
     res.sendStatus(418)
   })
 
-  app.get('/node/:identifier', async (req, res) => {
+  app.get('/node/identify/:identifier', async (req, res) => {
     const { identifier } = req.params
     console.log(`[ NODE ]: Identifying node "${identifier}"`)
     res.sendStatus(418)
