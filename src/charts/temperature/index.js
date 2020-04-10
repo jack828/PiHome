@@ -8,7 +8,10 @@ const formatDatasets = nodes => {
   const datasets = []
 
   nodes.forEach(node => {
-    const data = node.data.map(({ createdDate, value }) => ({ x: new Date(createdDate), y: value }))
+    const data = node.data.map(({ createdDate, value }) => ({
+      x: new Date(createdDate),
+      y: value
+    }))
     datasets.push({
       fill: false,
       label: node.nodeId,
@@ -51,10 +54,11 @@ const TemperatureChartContainer = () => {
             xAxes: [
               {
                 type: 'time',
-                distribution: 'series'
-                // time: {
-                // unit: 'minute'
-                // }
+                distribution: 'series',
+                time: {
+                  displayFormat: 'HH:mm',
+                  unit: 'minute'
+                }
               }
             ]
           }
