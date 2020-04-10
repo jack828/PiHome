@@ -1,11 +1,11 @@
 import React from 'react'
 import { Container } from 'reactstrap'
-import TemperatureChart from './charts/temperature'
+import Chart from './chart'
 
 const App = () => {
   return (
     <Container style={{ margin: '24px' }}>
-      <TemperatureChart />
+      <Chart title="Temperature" sensor="temperature" />
     </Container>
   )
 }

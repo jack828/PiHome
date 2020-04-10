@@ -22,9 +22,9 @@ const formatDatasets = nodes => {
   return datasets
 }
 
-const TemperatureChartContainer = () => {
+const ChartContainer = ({ title, sensor }) => {
   const loadDatasets = async () => {
-    const res = await fetch('/api/temperature/1/1')
+    const res = await fetch(`/api/${sensor}/1/1`)
     if (res.status !== 200) {
       return // some error
     }
@@ -43,7 +43,7 @@ const TemperatureChartContainer = () => {
 
   return (
     <Container>
-      <h1>Temperature</h1>
+      <h1>{title}</h1>
       <Line
         data={{
           datasets
@@ -68,4 +68,4 @@ const TemperatureChartContainer = () => {
   )
 }
 
-export default TemperatureChartContainer
+export default ChartContainer
