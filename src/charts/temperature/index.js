@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2'
 import moment from 'moment'
 
 const formatData = raw =>
-  raw.map(({ createdDate, temperature }) => ({ x: new Date(createdDate), y: temperature }))
+  raw.map(({ createdDate, value }) => ({ x: new Date(createdDate), y: value }))
 
 const TemperatureChartContainer = () => {
   const loadData = async () => {

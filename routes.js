@@ -3,6 +3,12 @@ const hat = require('hat')
 const initRoutes = (serviceLocator, app) => {
   const { serviceDatabase } = serviceLocator
   const nodes = serviceDatabase.collection('node')
+  const sensorCollections = {
+    temperature: serviceDatabase.collection('temperature'),
+    humidity: serviceDatabase.collection('humidity'),
+    pressure: serviceDatabase.collection('pressure'),
+    light: serviceDatabase.collection('light')
+  }
 
   app.get('/', (req, res) => {
     console.log(req.ip)
@@ -11,37 +17,38 @@ const initRoutes = (serviceLocator, app) => {
 
   app.get('/node/identify(/)?', async (req, res) => {
     // cold start node - no saved identifier
-    const identifier = hat().slice(0, 4)
+    const nodeId = hat().slice(0, 4)
     const insertOp = await nodes.insertOne({
-      id: identifier,
+      nodeId,
       lastIdentified: new Date()
     })
     // welcome to the club
-    console.log('[ NODE ] new node', identifier, insertOp.insertedId)
-    res.status(200).end(identifier)
+    console.log('[ NODE ] new node', nodeId, insertOp.insertedId)
+    res.status(200).end(nodeId)
   })
 
-  app.get('/node/identify/:identifier', async (req, res) => {
+  app.get('/node/identify/:nodeId', async (req, res) => {
+    // TODO does this even make sense
     // two things can happen here:
     //  - new node to the network
     //  - known node re-identifying at boot
     //
-    let identifier = req.params.identifier
-    console.log(`[ NODE ] identifying node "${identifier}"`)
+    let nodeId = req.params.nodeId
+    console.log(`[ NODE ] identifying node "${nodeId}"`)
 
     // See if we find one
-    let node = await nodes.findOne({ id: identifier })
+    let node = await nodes.findOne({ id: nodeId })
     console.log('[ NODE ] read node', node)
 
     if (!node) {
       // unknown node, welcome to the cluuuuuuuub
-      console.log('[ NODE ] new node', identifier)
+      console.log('[ NODE ] new node', nodeId)
       await nodes.insertOne({
-        id: identifier,
+        id: nodeId,
         lastIdentified: new Date()
       })
     } else {
-      console.log('[ NODE ] known node', identifier)
+      console.log('[ NODE ] known node', nodeId)
       await nodes.findOneAndUpdate(
         { _id: node._id },
         {
@@ -50,8 +57,27 @@ const initRoutes = (serviceLocator, app) => {
       )
     }
 
-    console.log('[ NODE ] done identifying node', identifier)
-    return res.status(200).end(identifier)
+    console.log('[ NODE ] done identifying node', nodeId)
+    return res.status(200).end(nodeId)
+  })
+
+  app.get('/node/log/:nodeId/:sensor/:value', async (req, res) => {
+    const { nodeId, sensor, value } = req.params
+    const sensorCollection = sensorCollections[sensor]
+    if (!sensorCollection) return res.sendStatus(404)
+
+    // TODO identify if never seen node before
+    // TODO error handling
+    const { insertedCount } = await sensorCollection.insertOne({
+      nodeId,
+      value,
+      createdDate: new Date()
+    })
+
+    if (insertedCount !== 1) {
+      return res.sendStatus(500)
+    }
+    res.sendStatus(200)
   })
 
   app.get('/api/:collectionName/:from/:to', async (req, res) => {
