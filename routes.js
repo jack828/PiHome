@@ -1,4 +1,5 @@
 const hat = require('hat')
+const pick = require('lodash.pick')
 
 const initRoutes = (serviceLocator, app) => {
   const { serviceDatabase } = serviceLocator
@@ -80,13 +81,31 @@ const initRoutes = (serviceLocator, app) => {
     res.sendStatus(200)
   })
 
+  // Sends an array of points for each nodeId
   app.get('/api/:collectionName/:from/:to', async (req, res) => {
     const { collectionName, from, to } = req.params
     const collection = serviceDatabase.collection(collectionName)
     const results = await collection.find({}).toArray()
-    console.log(results)
-    console.log(req.ip)
-    res.json({ results })
+
+    const aggregated = results.reduce((data, datum) => {
+      if (!data[datum.nodeId]) data[datum.nodeId] = []
+      data[datum.nodeId].push(pick(datum, ['value', 'createdDate']))
+      return data
+    }, {})
+    // {
+    //  'AB:12:DB:44': [ ... ]
+    // }
+    const nodes = Object.keys(aggregated).map(key => ({
+      nodeId: key,
+      data: aggregated[key]
+    }))
+    // [
+    //   {
+    //     nodeId: 'AB:12:DB:44',
+    //     data: [ ... ]
+    //   }
+    // ]
+    res.json({ results: nodes })
   })
 }
 
