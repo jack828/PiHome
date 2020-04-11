@@ -21,7 +21,7 @@ const App = () => {
               <Chart title="Light" sensor="light" />
             </Col>
             <Col xs="6">
-              <Chart title="Humidity" sensor="humidity" />
+              <Chart title="Humidity" sensor="humidity" min={0} max={100} />
             </Col>
           </Row>
         </Col>
