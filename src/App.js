@@ -9,7 +9,7 @@ const App = () => {
         <Col xs="9">
           <Row>
             <Col xs="6">
-              <Chart title="Temperature" sensor="temperature" />
+              <Chart title="Temperature" sensor="temperature" min={10} max={40} />
             </Col>
             <Col xs="6">
               <Chart title="Pressure" sensor="pressure" />
