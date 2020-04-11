@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Col, Row } from 'reactstrap'
 import Chart from './chart'
+import NodeStatus from './node-status'
 
 const App = () => {
   return (
@@ -33,7 +34,9 @@ const App = () => {
         <Col xs={{ size: 12, order: 0 }} lg={{ size: 3, order: 1 }}>
           <Row>
             <Col xs="12" md="6">
-              <div style={{ border: '1px solid red' }}>Node Status</div>
+              <div style={{ border: '1px solid red' }}>
+                <NodeStatus />
+              </div>
             </Col>
             <Col xs="12" md="6">
               <div style={{ border: '1px solid red' }}>Chart Options</div>

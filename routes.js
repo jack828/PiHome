@@ -120,6 +120,11 @@ const initRoutes = (serviceLocator, app) => {
     // ]
     res.json({ results: aggregatedData })
   })
+
+  app.get('/api/nodes', async(req, res) => {
+    const nodeData = await nodes.find({}).sort({ lastIdentified: -1 }).toArray()
+    res.json(nodeData)
+  })
 }
 
 module.exports = initRoutes
