@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container } from 'reactstrap'
 import { Line } from 'react-chartjs-2'
-import moment from 'moment'
 
 // TODO Toggleable node view
 const formatDatasets = nodes => {
@@ -47,7 +45,7 @@ const ChartContainer = ({ title, sensor }) => {
   const [datasets, setDatasets] = useState([])
 
   return (
-    <Container style={{ width: '800px' }}>
+    <>
       <h1>{title}</h1>
       <Line
         data={{
@@ -69,7 +67,7 @@ const ChartContainer = ({ title, sensor }) => {
           }
         }}
       />
-    </Container>
+    </>
   )
 }
 

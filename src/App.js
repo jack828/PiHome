@@ -1,14 +1,24 @@
 import React from 'react'
-import { Container } from 'reactstrap'
+import { Container, Col, Row } from 'reactstrap'
 import Chart from './chart'
 
 const App = () => {
   return (
     <Container style={{ margin: '24px' }}>
-      <Chart title="Temperature" sensor="temperature" />
-      <Chart title="Pressure" sensor="pressure" />
-      <Chart title="Light" sensor="light" />
-      <Chart title="Humidity" sensor="humidity" />
+      <Row>
+        <Col xs="6">
+          <Chart title="Temperature" sensor="temperature" />
+        </Col>
+        <Col xs="6">
+          <Chart title="Pressure" sensor="pressure" />
+        </Col>
+        <Col xs="6">
+          <Chart title="Light" sensor="light" />
+        </Col>
+        <Col xs="6">
+          <Chart title="Humidity" sensor="humidity" />
+        </Col>
+      </Row>
     </Container>
   )
 }
