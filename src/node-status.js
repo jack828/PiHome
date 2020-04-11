@@ -22,6 +22,21 @@ export default () => {
   if (!nodes || !nodes.length) {
     return <h4>No Nodes!</h4>
   }
+  // TODO this should be lastSeen
+  // using lastIdentified for testing
+  const getStatusIcon = lastIdentified => {
+    const date = moment(lastIdentified)
+    const thirtyMinAgo = moment().subtract(30, 'minutes')
+    const oneDayAgo = moment().subtract(1, 'day')
+
+    if (date.isBefore(oneDayAgo)) {
+      return 'times'
+    } else if (date.isBefore(thirtyMinAgo)) {
+      return 'exclamation-triangle'
+    } else {
+      return 'check'
+    }
+  }
   // Statuses
   //  - ONLINE - seen at least 30m ago
   //  - WARNING - seen greater than 30m ago
@@ -33,7 +48,9 @@ export default () => {
         <tbody>
           {nodes.map(({ nodeId, lastIdentified, visible }) => (
             <tr key={nodeId}>
-              <th scope="row" className="text-center">OK</th>
+              <th scope="row" className="text-center">
+                <FontAwesomeIcon icon={getStatusIcon(lastIdentified)} />
+              </th>
               <td>
                 {nodeId.slice(0, 8)} {nodeId.slice(9, 17)}
               </td>
