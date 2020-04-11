@@ -6,10 +6,15 @@ const App = () => {
   return (
     <Container fluid>
       <Row>
-        <Col md={{ size: 12, order: 2 }} lg="9">
+        <Col xs={{ size: 12, order: 1 }} lg={{ size: 9, order: 0 }}>
           <Row>
             <Col xs="12" md="6">
-              <Chart title="Temperature" sensor="temperature" min={10} max={40} />
+              <Chart
+                title="Temperature"
+                sensor="temperature"
+                min={10}
+                max={40}
+              />
             </Col>
             <Col xs="12" md="6">
               <Chart title="Pressure" sensor="pressure" />
@@ -25,7 +30,7 @@ const App = () => {
             </Col>
           </Row>
         </Col>
-        <Col md={{ size: 12, order: 1 }} lg="3">
+        <Col xs={{ size: 12, order: 0 }} lg={{ size: 3, order: 1 }}>
           <Row>
             <Col xs="12" md="6">
               <div style={{ border: '1px solid red' }}>Node Status</div>
