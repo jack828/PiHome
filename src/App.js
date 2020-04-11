@@ -6,31 +6,31 @@ const App = () => {
   return (
     <Container fluid noGutters>
       <Row>
-        <Col xs="9">
+        <Col md="12" lg="9">
           <Row>
-            <Col xs="6">
+            <Col xs="12" md="6">
               <Chart title="Temperature" sensor="temperature" min={10} max={40} />
             </Col>
-            <Col xs="6">
+            <Col xs="12" md="6">
               <Chart title="Pressure" sensor="pressure" />
             </Col>
           </Row>
 
           <Row>
-            <Col xs="6">
+            <Col xs="12" md="6">
               <Chart title="Light" sensor="light" />
             </Col>
-            <Col xs="6">
+            <Col xs="12" md="6">
               <Chart title="Humidity" sensor="humidity" min={0} max={100} />
             </Col>
           </Row>
         </Col>
-        <Col xs="3">
+        <Col md="12" lg="3">
           <Row>
-            <Col xs="6">
+            <Col xs="12" md="6">
               <div style={{ border: '1px solid red' }}>Node Status</div>
             </Col>
-            <Col xs="6">
+            <Col xs="12" md="6">
               <div style={{ border: '1px solid red' }}>Chart Options</div>
             </Col>
           </Row>
