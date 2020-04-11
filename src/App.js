@@ -31,12 +31,14 @@ const App = () => {
     return chartData
   }
   const loadNodes = async () => await apiRequest(`/api/nodes`)
-
-  useEffect(() => {
+  const reloadData = () =>
     Promise.all([
       loadNodes().then(nodeData => setNodes(nodeData)),
       loadCharts().then(chartData => setCharts(chartData))
     ])
+
+  useEffect(() => {
+    reloadData()
   }, [])
 
   console.log({ nodes })

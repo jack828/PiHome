@@ -98,7 +98,6 @@ const initRoutes = (serviceLocator, app) => {
       nodes.find({}).toArray()
     ])
 
-    console.log(nodeData)
     const aggregated = rawData.reduce((data, datum) => {
       if (!data[datum.nodeId]) data[datum.nodeId] = []
       data[datum.nodeId].push(pick(datum, ['value', 'createdDate']))
