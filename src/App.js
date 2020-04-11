@@ -4,7 +4,7 @@ import Chart from './chart'
 
 const App = () => {
   return (
-    <Container fluid noGutters>
+    <Container fluid>
       <Row>
         <Col md="12" lg="9">
           <Row>
