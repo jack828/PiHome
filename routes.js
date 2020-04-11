@@ -46,6 +46,11 @@ const initRoutes = (serviceLocator, app) => {
       console.log('[ NODE ] new node', nodeId)
       await nodes.insertOne({
         nodeId,
+        colour:
+          '#' +
+          Math.random()
+            .toString(16)
+            .substr(2, 6),
         lastIdentified: new Date()
       })
     } else {
