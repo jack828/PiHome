@@ -38,14 +38,14 @@ const initRoutes = (serviceLocator, app) => {
     console.log(`[ NODE ] identifying node "${nodeId}"`)
 
     // See if we find one
-    let node = await nodes.findOne({ id: nodeId })
+    let node = await nodes.findOne({ nodeId })
     console.log('[ NODE ] read node', node)
 
     if (!node) {
       // unknown node, welcome to the cluuuuuuuub
       console.log('[ NODE ] new node', nodeId)
       await nodes.insertOne({
-        id: nodeId,
+        nodeId,
         lastIdentified: new Date()
       })
     } else {
@@ -85,9 +85,13 @@ const initRoutes = (serviceLocator, app) => {
   app.get('/api/:collectionName/:from/:to', async (req, res) => {
     const { collectionName, from, to } = req.params
     const collection = serviceDatabase.collection(collectionName)
-    const results = await collection.find({}).toArray()
+    const [rawData, nodeData] = await Promise.all([
+      collection.find({}).toArray(),
+      nodes.find({}).toArray()
+    ])
 
-    const aggregated = results.reduce((data, datum) => {
+    console.log(nodeData)
+    const aggregated = rawData.reduce((data, datum) => {
       if (!data[datum.nodeId]) data[datum.nodeId] = []
       data[datum.nodeId].push(pick(datum, ['value', 'createdDate']))
       return data
@@ -95,8 +99,9 @@ const initRoutes = (serviceLocator, app) => {
     // {
     //  'AB:12:DB:44': [ ... ]
     // }
-    const nodes = Object.keys(aggregated).map(key => ({
+    const aggregatedData = Object.keys(aggregated).map(key => ({
       nodeId: key,
+      colour: nodeData.find(({ nodeId }) => nodeId === key).colour,
       data: aggregated[key]
     }))
     // [
@@ -105,7 +110,7 @@ const initRoutes = (serviceLocator, app) => {
     //     data: [ ... ]
     //   }
     // ]
-    res.json({ results: nodes })
+    res.json({ results: aggregatedData })
   })
 }
 

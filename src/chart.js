@@ -14,6 +14,11 @@ const formatDatasets = nodes => {
     }))
     datasets.push({
       fill: false,
+      showLine: true,
+      pointRadius: 1,
+      backgroundColor: node.colour,
+      borderColor: node.colour,
+      pointStyle: 'line',
       label: node.nodeId,
       data
     })
