@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Col, Row } from 'reactstrap'
 import moment from 'moment'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default () => {
   const loadNodes = async () => {
@@ -30,16 +31,22 @@ export default () => {
       <p>{nodes.length} nodes</p>
       <Table size="sm" dark>
         <tbody>
-          {nodes.map(({ nodeId, lastIdentified }) => (
-            <tr>
-              <th scope="row">OK</th>
+          {nodes.map(({ nodeId, lastIdentified, visible }) => (
+            <tr key={nodeId}>
+              <th scope="row" className="text-center">OK</th>
               <td>
                 {nodeId.slice(0, 8)} {nodeId.slice(9, 17)}
               </td>
               <td>{moment(lastIdentified).fromNow()}</td>
-              <td>C</td>
-              <td>E</td>
-              <td>H</td>
+              <td>
+                <FontAwesomeIcon icon="terminal" />
+              </td>
+              <td>
+                <FontAwesomeIcon icon="edit" />
+              </td>
+              <td>
+                <FontAwesomeIcon icon={visible ? 'eye' : 'eye-slash'} />
+              </td>
             </tr>
           ))}
         </tbody>
