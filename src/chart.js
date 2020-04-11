@@ -42,7 +42,7 @@ const ChartContainer = ({ title, sensor }) => {
   const [datasets, setDatasets] = useState([])
 
   return (
-    <Container>
+    <Container style={{ width: '800px' }}>
       <h1>{title}</h1>
       <Line
         data={{
