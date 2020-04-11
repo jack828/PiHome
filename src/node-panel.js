@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Table, Col, Row } from 'reactstrap'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default () => {
-  const loadNodes = async () => {
-    const res = await fetch(`/api/nodes`)
-    if (res.status !== 200) {
-      return // some error
-    }
-    const nodes = await res.json()
-    console.log(nodes)
-    setNodes(nodes)
-  }
-
-  useEffect(() => {
-    loadNodes()
-  }, [])
-
-  const [nodes, setNodes] = useState([])
+export default ({ nodes }) => {
   if (!nodes || !nodes.length) {
     return <h4>No Nodes!</h4>
   }

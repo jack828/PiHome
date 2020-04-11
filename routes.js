@@ -118,7 +118,7 @@ const initRoutes = (serviceLocator, app) => {
     //     data: [ ... ]
     //   }
     // ]
-    res.json({ results: aggregatedData })
+    res.json(aggregatedData)
   })
 
   app.get('/api/nodes', async(req, res) => {

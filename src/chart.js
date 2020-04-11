@@ -25,24 +25,18 @@ const formatDatasets = nodes => {
   return datasets
 }
 
-const ChartContainer = ({ title, sensor, min, max }) => {
+const ChartContainer = ({ title, sensor, data, min, max }) => {
+  const [datasets, setDatasets] = useState([])
+
   const loadDatasets = async () => {
-    const res = await fetch(`/api/${sensor}/1/1`)
-    if (res.status !== 200) {
-      return // some error
-    }
-    const { results: nodes } = await res.json()
-    console.log(nodes)
-    const formattedDatasets = formatDatasets(nodes)
+    const formattedDatasets = formatDatasets(data)
     console.log(formattedDatasets)
     setDatasets(formattedDatasets)
   }
 
   useEffect(() => {
     loadDatasets()
-  }, [])
-
-  const [datasets, setDatasets] = useState([])
+  }, [data])
 
   return (
     <>
