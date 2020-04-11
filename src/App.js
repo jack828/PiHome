@@ -4,19 +4,29 @@ import Chart from './chart'
 
 const App = () => {
   return (
-    <Container style={{ margin: '24px' }}>
+    <Container fluid noGutters>
       <Row>
-        <Col xs="6">
-          <Chart title="Temperature" sensor="temperature" />
+        <Col xs="9">
+          <Row>
+            <Col xs="6">
+              <Chart title="Temperature" sensor="temperature" />
+            </Col>
+            <Col xs="6">
+              <Chart title="Pressure" sensor="pressure" />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs="6">
+              <Chart title="Light" sensor="light" />
+            </Col>
+            <Col xs="6">
+              <Chart title="Humidity" sensor="humidity" />
+            </Col>
+          </Row>
         </Col>
-        <Col xs="6">
-          <Chart title="Pressure" sensor="pressure" />
-        </Col>
-        <Col xs="6">
-          <Chart title="Light" sensor="light" />
-        </Col>
-        <Col xs="6">
-          <Chart title="Humidity" sensor="humidity" />
+        <Col xs="3">
+          <div style={{ border: '1px solid red' }}>test</div>
         </Col>
       </Row>
     </Container>
