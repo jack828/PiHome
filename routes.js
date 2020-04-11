@@ -1,4 +1,5 @@
 const hat = require('hat')
+const moment = require('moment')
 const pick = require('lodash.pick')
 
 const initRoutes = (serviceLocator, app) => {
@@ -91,7 +92,9 @@ const initRoutes = (serviceLocator, app) => {
     const { collectionName, from, to } = req.params
     const collection = serviceDatabase.collection(collectionName)
     const [rawData, nodeData] = await Promise.all([
-      collection.find({}).toArray(),
+      collection
+        .find({ createdDate: { $gte: moment().subtract(1, 'day').toDate() } })
+        .toArray(),
       nodes.find({}).toArray()
     ])
 
