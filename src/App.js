@@ -26,7 +26,14 @@ const App = () => {
           </Row>
         </Col>
         <Col xs="3">
-          <div style={{ border: '1px solid red' }}>test</div>
+          <Row>
+            <Col xs="6">
+              <div style={{ border: '1px solid red' }}>Node Status</div>
+            </Col>
+            <Col xs="6">
+              <div style={{ border: '1px solid red' }}>Chart Options</div>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>
