@@ -33,12 +33,12 @@ const App = () => {
         </Col>
         <Col xs={{ size: 12, order: 0 }} lg={{ size: 3, order: 1 }}>
           <Row>
-            <Col xs="12" md="6">
+            <Col xs="12">
               <div style={{ border: '1px solid red' }}>
                 <NodeStatus />
               </div>
             </Col>
-            <Col xs="12" md="6">
+            <Col xs="12">
               <div style={{ border: '1px solid red' }}>Chart Options</div>
             </Col>
           </Row>
