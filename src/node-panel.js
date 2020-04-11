@@ -31,7 +31,7 @@ export default ({ nodes }) => {
       <p>{nodes.length} nodes</p>
       <Table size="sm" dark>
         <tbody>
-          {nodes.map(({ nodeId, lastIdentified, visible }) => (
+          {nodes.map(({ nodeId, lastIdentified }) => (
             <tr key={nodeId} className="d-flex text-center">
               <th className="col-1" scope="row">
                 <FontAwesomeIcon icon={getStatusIcon(lastIdentified)} />
@@ -39,15 +39,12 @@ export default ({ nodes }) => {
               <td className="col-4">
                 {nodeId.slice(0, 8)} {nodeId.slice(9, 17)}
               </td>
-              <td className="col-4">{moment(lastIdentified).fromNow()}</td>
+              <td className="col-5">{moment(lastIdentified).fromNow()}</td>
               <td className="col-1">
                 <FontAwesomeIcon icon="terminal" />
               </td>
               <td className="col-1">
                 <FontAwesomeIcon icon="edit" />
-              </td>
-              <td className="col-1">
-                <FontAwesomeIcon icon={visible ? 'eye' : 'eye-slash'} />
               </td>
             </tr>
           ))}
