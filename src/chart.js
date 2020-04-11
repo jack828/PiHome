@@ -25,7 +25,7 @@ const formatDatasets = nodes => {
   return datasets
 }
 
-const ChartContainer = ({ title, sensor }) => {
+const ChartContainer = ({ title, sensor, min, max }) => {
   const loadDatasets = async () => {
     const res = await fetch(`/api/${sensor}/1/1`)
     if (res.status !== 200) {
@@ -54,6 +54,14 @@ const ChartContainer = ({ title, sensor }) => {
         legend={{ display: true }}
         options={{
           scales: {
+            yAxes: [
+              {
+                ticks: {
+                  suggestedMin: min,
+                  suggestedMax: max
+                }
+              }
+            ],
             xAxes: [
               {
                 type: 'time',
