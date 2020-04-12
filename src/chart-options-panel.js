@@ -20,6 +20,11 @@ export default ({ config, setConfig, reloadCharts }) => {
   return (
     <Row>
       <Table size="sm" dark>
+        <thead>
+          <tr>
+            <th className="text-center">Chart Options</th>
+          </tr>
+        </thead>
         <tbody>
           <tr
             className="d-flex text-center"
