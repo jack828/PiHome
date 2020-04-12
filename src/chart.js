@@ -38,41 +38,40 @@ const ChartContainer = ({ title, sensor, data, yMin, yMax, config }) => {
   }, [data, config])
 
   return (
-    <>
-      <h1>{title}</h1>
-      <Line
-        data={{
-          datasets
-        }}
-        legend={{ display: true }}
-        options={{
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  suggestedMin: yMin,
-                  suggestedMax: yMax
-                }
+    <Line
+      title="test"
+      data={{
+        datasets
+      }}
+      legend={{ display: true }}
+      options={{
+        title: { display: true, text: title, position: 'top', fontSize: 24 },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: yMin,
+                suggestedMax: yMax
               }
-            ],
-            xAxes: [
-              {
-                type: 'time',
-                distribution: 'series',
-                time: {
-                  unit: 'hour'
-                },
-                ticks: {
-                  // TODO check this does work
-                  suggestedMin: config.range.start,
-                  suggestedMax: config.range.end
-                }
+            }
+          ],
+          xAxes: [
+            {
+              type: 'time',
+              distribution: 'series',
+              time: {
+                unit: 'hour'
+              },
+              ticks: {
+                // TODO check this does work
+                suggestedMin: config.range.start,
+                suggestedMax: config.range.end
               }
-            ]
-          }
-        }}
-      />
-    </>
+            }
+          ]
+        }
+      }}
+    />
   )
 }
 
