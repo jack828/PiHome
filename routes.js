@@ -94,7 +94,13 @@ const initRoutes = (serviceLocator, app) => {
     const collection = serviceDatabase.collection(collectionName)
     const [rawData, nodeData] = await Promise.all([
       collection
-        .find({ createdDate: { $gte: moment().subtract(1, 'day').toDate() } })
+        .find({
+          createdDate: {
+            $gte: moment()
+              .subtract(1, 'day')
+              .toDate()
+          }
+        })
         .toArray(),
       nodes.find({}).toArray()
     ])
@@ -121,10 +127,14 @@ const initRoutes = (serviceLocator, app) => {
     res.json(aggregatedData)
   })
 
-  app.get('/api/nodes', async(req, res) => {
-    const nodeData = await nodes.find({}).sort({ lastIdentified: -1 }).toArray()
+  app.get('/api/nodes', async (req, res) => {
+    const nodeData = await nodes
+      .find({})
+      .sort({ lastIdentified: -1 })
+      .toArray()
     res.json(nodeData)
   })
+
   app.post('/api/node/rename/:nodeId', bodyParser.text(), async (req, res) => {
     const { nodeId } = req.params
     const nickname = req.body.trim()
