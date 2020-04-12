@@ -1,6 +1,7 @@
 const hat = require('hat')
 const moment = require('moment')
 const pick = require('lodash.pick')
+const bodyParser = require('body-parser')
 
 const initRoutes = (serviceLocator, app) => {
   const { serviceDatabase } = serviceLocator
@@ -123,6 +124,19 @@ const initRoutes = (serviceLocator, app) => {
   app.get('/api/nodes', async(req, res) => {
     const nodeData = await nodes.find({}).sort({ lastIdentified: -1 }).toArray()
     res.json(nodeData)
+  })
+  app.post('/api/node/rename/:nodeId', bodyParser.text(), async (req, res) => {
+    const { nodeId } = req.params
+    const nickname = req.body.trim()
+    console.log({ nickname })
+
+    await nodes.findOneAndUpdate(
+      { nodeId },
+      {
+        $set: { nickname }
+      }
+    )
+    res.sendStatus(200)
   })
 }
 

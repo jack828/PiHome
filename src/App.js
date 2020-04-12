@@ -3,7 +3,7 @@ import { Container, Col, Row } from 'reactstrap'
 import Chart from './chart'
 import NodePanel from './node-panel'
 
-const apiRequest = async uri => {
+const api = async uri => {
   const res = await fetch(uri)
   if (res.status !== 200) {
     throw new Error('TODO')
@@ -18,7 +18,7 @@ const App = () => {
     const sensors = ['temperature', 'pressure', 'light', 'humidity']
 
     const sensorData = await Promise.all(
-      sensors.map(sensor => apiRequest(`/api/${sensor}/1/1/`))
+      sensors.map(sensor => api(`/api/${sensor}/1/1/`))
     )
     const chartData = sensors.reduce(
       (data, sensor) => ({
@@ -27,21 +27,32 @@ const App = () => {
       }),
       {}
     )
-    console.log({ chartData })
     return chartData
   }
-  const loadNodes = async () => await apiRequest(`/api/nodes`)
+  const loadNodes = async () => await api(`/api/nodes`)
   const reloadData = () =>
     Promise.all([
       loadNodes().then(nodeData => setNodes(nodeData)),
       loadCharts().then(chartData => setCharts(chartData))
     ])
 
+  const handleChangeNickname = async (nodeId, nickname) => {
+    console.log('renaming node', nodeId, 'to', nickname)
+    const res = await fetch(`/api/node/rename/${nodeId}/`, {
+      method: 'POST',
+      body: nickname
+    })
+    if (res.status !== 200) {
+      throw new Error('TODO')
+    }
+    console.log(await res.text())
+    reloadData()
+  }
+
   useEffect(() => {
     reloadData()
   }, [])
 
-  console.log({ nodes })
   return (
     <Container fluid>
       <Row>
@@ -89,7 +100,10 @@ const App = () => {
             {nodes && (
               <>
                 <Col xs="12">
-                  <NodePanel nodes={nodes} />
+                  <NodePanel
+                    nodes={nodes}
+                    onChangeNickname={handleChangeNickname}
+                  />
                 </Col>
                 <Col xs="12">
                   <div style={{ border: '1px solid red' }}>Chart Options</div>
