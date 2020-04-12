@@ -43,13 +43,26 @@ const ChartContainer = ({ title, sensor, data, yMin, yMax, config }) => {
       data={{
         datasets
       }}
-      legend={{ display: true }}
+      legend={{
+        display: true,
+        labels: {
+          fontColor: 'white'
+        }
+      }}
       options={{
-        title: { display: true, text: title, position: 'top', fontSize: 24 },
+        title: {
+          display: true,
+          text: title,
+          position: 'top',
+          fontSize: 24,
+          fontColor: 'white'
+        },
         scales: {
           yAxes: [
             {
+              gridLines: { color: '#999' },
               ticks: {
+                fontColor: 'white',
                 suggestedMin: yMin,
                 suggestedMax: yMax
               }
@@ -62,8 +75,9 @@ const ChartContainer = ({ title, sensor, data, yMin, yMax, config }) => {
               time: {
                 unit: 'hour'
               },
+              gridLines: { color: '#999' },
               ticks: {
-                // TODO check this does work
+                fontColor: 'white',
                 suggestedMin: config.range.start,
                 suggestedMax: config.range.end
               }
