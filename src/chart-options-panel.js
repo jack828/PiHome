@@ -39,7 +39,7 @@ export default ({ config, setConfig, reloadCharts }) => {
               <FontAwesomeIcon icon="calendar-day" />
             </th>
             <td className="col-4">Set date range</td>
-            <td className="col-5">
+            <td className="col-7">
               <ButtonGroup size="sm">
                 {config.rangeOptions.map(option => (
                   <Button
