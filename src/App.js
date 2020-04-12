@@ -15,9 +15,16 @@ const api = async uri => {
 
 const createRangeOptions = () => [
   {
+    name: '12 h',
+    start: moment()
+      .subtract(12, 'hours')
+      .toISOString(),
+    end: moment().toISOString()
+  },
+  {
     name: '24 h',
     start: moment()
-      .subtract(1, 'day')
+      .subtract(24, 'hours')
       .toISOString(),
     end: moment().toISOString()
   },
@@ -41,7 +48,7 @@ const defaultChartConfig = () => {
   const rangeOptions = createRangeOptions()
   return {
     showNicknames: true,
-    range: rangeOptions[0],
+    range: rangeOptions[1],
     rangeOptions
   }
 }
