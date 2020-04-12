@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Col, Row, Input } from 'reactstrap'
+import { Table, Row, Input } from 'reactstrap'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -7,10 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //  - ONLINE - seen at least 30m ago
 //  - WARNING - seen greater than 30m ago
 //  - OFFLINE - seen greater than 1 day ago
-// TODO this should be lastSeen
-// using lastIdentified for testing
-const getStatusIcon = lastIdentified => {
-  const date = moment(lastIdentified)
+const getStatusIcon = lastReading => {
+  const date = moment(lastReading)
   const thirtyMinAgo = moment().subtract(30, 'minutes')
   const oneDayAgo = moment().subtract(1, 'day')
 
@@ -23,14 +21,14 @@ const getStatusIcon = lastIdentified => {
   }
 }
 
-const Node = ({ nodeId, nickname, lastIdentified, onChangeNickname }) => {
+const Node = ({ nodeId, nickname, lastReading, onChangeNickname }) => {
   const [editMode, setEditMode] = useState(false)
   const displayName = nickname || nodeId
   const [editedNickname, setEditedNickname] = useState(displayName)
   return (
     <tr className="d-flex text-center">
       <th className="col-1" scope="row">
-        <FontAwesomeIcon icon={getStatusIcon(lastIdentified)} />
+        <FontAwesomeIcon icon={getStatusIcon(lastReading)} />
       </th>
       <td className="col-4">
         {editMode ? (
@@ -42,7 +40,7 @@ const Node = ({ nodeId, nickname, lastIdentified, onChangeNickname }) => {
           displayName
         )}
       </td>
-      <td className="col-5">{moment(lastIdentified).fromNow()}</td>
+      <td className="col-5">{moment(lastReading).fromNow()}</td>
       <td className="col-1">
         <FontAwesomeIcon icon="terminal" />
       </td>

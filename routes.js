@@ -85,6 +85,12 @@ const initRoutes = (serviceLocator, app) => {
     if (insertedCount !== 1) {
       return res.sendStatus(500)
     }
+    await nodes.findOneAndUpdate(
+      { nodeId },
+      {
+        $set: { lastReading: new Date() }
+      }
+    )
     res.sendStatus(200)
   })
 
@@ -131,7 +137,7 @@ const initRoutes = (serviceLocator, app) => {
   app.get('/api/nodes', async (req, res) => {
     const nodeData = await nodes
       .find({})
-      .sort({ lastIdentified: -1 })
+      .sort({ lastReading: -1 })
       .toArray()
     res.json(nodeData)
   })
