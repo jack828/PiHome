@@ -13,23 +13,46 @@ const api = async uri => {
   return await res.json()
 }
 
-const defaultChartConfig = {
-  showNicknames: true,
-  range: {
+const createRangeOptions = () => [
+  {
+    name: '24 h',
     start: moment()
       .subtract(1, 'day')
       .toISOString(),
     end: moment().toISOString()
+  },
+  {
+    name: '7 d',
+    start: moment()
+      .subtract(7, 'days')
+      .toISOString(),
+    end: moment().toISOString()
+  },
+  {
+    name: '1 m',
+    start: moment()
+      .subtract(1, 'month')
+      .toISOString(),
+    end: moment().toISOString()
+  }
+]
+
+const defaultChartConfig = () => {
+  const rangeOptions = createRangeOptions()
+  return {
+    showNicknames: true,
+    range: rangeOptions[0],
+    rangeOptions
   }
 }
 
 const App = () => {
   const [charts, setCharts] = useState(null)
   const [nodes, setNodes] = useState(null)
-  const [chartConfig, setChartConfig] = useState(defaultChartConfig)
-  const loadCharts = async () => {
+  const [chartConfig, setChartConfig] = useState(defaultChartConfig())
+  const loadCharts = async (rangeOption) => {
     const sensors = ['temperature', 'pressure', 'light', 'humidity']
-    const { start, end } = chartConfig.range
+    const { start, end } = rangeOption || chartConfig.range
 
     const sensorData = await Promise.all(
       sensors.map(sensor => api(`/api/sensor/${sensor}/${start}/${end}/`))
@@ -41,14 +64,10 @@ const App = () => {
       }),
       {}
     )
-    return chartData
+    setCharts(chartData)
   }
-  const loadNodes = async () => await api(`/api/nodes`)
-  const reloadData = () =>
-    Promise.all([
-      loadNodes().then(nodeData => setNodes(nodeData)),
-      loadCharts().then(chartData => setCharts(chartData))
-    ])
+  const loadNodes = async () => setNodes(await api(`/api/nodes`))
+  const reloadData = () => Promise.all([loadNodes(), loadCharts()])
 
   const handleChangeNickname = async (nodeId, nickname) => {
     console.log('renaming node', nodeId, 'to', nickname)
@@ -131,6 +150,7 @@ const App = () => {
                   <ChartOptionsPanel
                     config={chartConfig}
                     setConfig={setChartConfig}
+                    reloadCharts={loadCharts}
                   />
                 </Col>
               </>
