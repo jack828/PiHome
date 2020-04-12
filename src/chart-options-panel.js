@@ -30,7 +30,7 @@ export default ({ config, setConfig, reloadCharts }) => {
                 icon={config.showNicknames ? 'check' : 'minus'}
               />
             </th>
-            <td className="col-4">
+            <td className="col-11">
               {config.showNicknames ? 'Hide' : 'Show'} nicknames
             </td>
           </tr>
