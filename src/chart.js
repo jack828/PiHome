@@ -60,8 +60,12 @@ const ChartContainer = ({ title, sensor, data, yMin, yMax, config }) => {
                 type: 'time',
                 distribution: 'series',
                 time: {
-                  displayFormat: 'HH:mm',
-                  unit: 'minute'
+                  unit: 'hour'
+                },
+                ticks: {
+                  // TODO check this does work
+                  suggestedMin: config.range.start,
+                  suggestedMax: config.range.end
                 }
               }
             ]

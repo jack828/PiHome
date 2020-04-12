@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Col, Row } from 'reactstrap'
+import moment from 'moment'
 import Chart from './chart'
 import NodePanel from './node-panel'
 import ChartOptionsPanel from './chart-options-panel'
@@ -13,7 +14,13 @@ const api = async uri => {
 }
 
 const defaultChartConfig = {
-  showNicknames: true
+  showNicknames: true,
+  range: {
+    start: moment()
+      .subtract(1, 'day')
+      .toISOString(),
+    end: moment().toISOString()
+  }
 }
 
 const App = () => {
@@ -22,9 +29,10 @@ const App = () => {
   const [chartConfig, setChartConfig] = useState(defaultChartConfig)
   const loadCharts = async () => {
     const sensors = ['temperature', 'pressure', 'light', 'humidity']
+    const { start, end } = chartConfig.range
 
     const sensorData = await Promise.all(
-      sensors.map(sensor => api(`/api/${sensor}/1/1/`))
+      sensors.map(sensor => api(`/api/sensor/${sensor}/${start}/${end}/`))
     )
     const chartData = sensors.reduce(
       (data, sensor) => ({

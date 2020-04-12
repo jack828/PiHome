@@ -89,16 +89,15 @@ const initRoutes = (serviceLocator, app) => {
   })
 
   // Sends an array of points for each nodeId
-  app.get('/api/:collectionName/:from/:to', async (req, res) => {
+  app.get('/api/sensor/:collectionName/:from/:to', async (req, res) => {
     const { collectionName, from, to } = req.params
     const collection = serviceDatabase.collection(collectionName)
     const [rawData, nodeData] = await Promise.all([
       collection
         .find({
           createdDate: {
-            $gte: moment()
-              .subtract(1, 'day')
-              .toDate()
+            $gte: moment(from).toDate(),
+            $lte: moment(to).toDate()
           }
         })
         .toArray(),
