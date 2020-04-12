@@ -27,12 +27,10 @@ export default ({ config, setConfig, reloadCharts }) => {
           >
             <th className="col-1" scope="row">
               <FontAwesomeIcon
-                icon={config.showNicknames ? 'check' : 'minus'}
+                icon={config.showNicknames ? 'eye' : 'eye-slash'}
               />
             </th>
-            <td className="col-11">
-              {config.showNicknames ? 'Hide' : 'Show'} nicknames
-            </td>
+            <td className="col-11">Toggle nicknames</td>
           </tr>
           <tr className="d-flex text-center">
             <th className="col-1" scope="row">
