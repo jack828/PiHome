@@ -21,10 +21,39 @@ const getStatusIcon = lastReading => {
   }
 }
 
-const Node = ({ nodeId, nickname, lastReading, onChangeNickname }) => {
+const formatDuration = (start, end) => {
+  const SECONDS = 1 * 1000
+  const MINUTES = 60 * SECONDS
+  const HOURS = 60 * MINUTES
+  const DAYS = 24 * HOURS
+  const duration = moment().diff(end) // in ms
+
+  const days = Math.floor(duration / DAYS)
+  const hours = Math.floor((duration % DAYS) / HOURS)
+  const minutes = Math.floor((duration % HOURS) / MINUTES)
+  const seconds = Math.floor((duration % MINUTES) / SECONDS)
+
+  const format = (amount, label) => `${amount > 0 ? `${amount}${label} ` : ''}`
+  return (
+    format(days, 'd') +
+    format(hours, 'h') +
+    format(minutes, 'm') +
+    format(seconds, 's')
+  )
+}
+
+const Node = ({
+  nodeId,
+  nickname,
+  lastIdentified,
+  lastReading,
+  onChangeNickname
+}) => {
   const [editMode, setEditMode] = useState(false)
+  const [showUptime, setShowUptime] = useState(false)
   const displayName = nickname || nodeId
   const [editedNickname, setEditedNickname] = useState(displayName)
+
   return (
     <tr className="d-flex text-center">
       <th className="col-1" scope="row">
@@ -40,7 +69,14 @@ const Node = ({ nodeId, nickname, lastReading, onChangeNickname }) => {
           displayName
         )}
       </td>
-      <td className="col-5">{moment(lastReading).fromNow()}</td>
+      <td
+        className="col-5"
+        onClick={() => setShowUptime(prevState => !prevState)}
+      >
+        {showUptime
+          ? formatDuration(moment(), lastIdentified)
+          : moment(lastReading).fromNow()}
+      </td>
       <td className="col-1">
         <FontAwesomeIcon icon="terminal" />
       </td>
