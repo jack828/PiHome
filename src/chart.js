@@ -26,7 +26,7 @@ const formatDatasets = (config, nodes) => {
   return datasets
 }
 
-const ChartContainer = ({ title, sensor, data, min, max, config }) => {
+const ChartContainer = ({ title, sensor, data, yMin, yMax, config }) => {
   const [datasets, setDatasets] = useState([])
 
   const loadDatasets = () => {
@@ -50,8 +50,8 @@ const ChartContainer = ({ title, sensor, data, min, max, config }) => {
             yAxes: [
               {
                 ticks: {
-                  suggestedMin: min,
-                  suggestedMax: max
+                  suggestedMin: yMin,
+                  suggestedMax: yMax
                 }
               }
             ],

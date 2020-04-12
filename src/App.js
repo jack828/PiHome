@@ -70,8 +70,8 @@ const App = () => {
                   <Chart
                     title="Temperature"
                     sensor="temperature"
-                    min={10}
-                    max={40}
+                    yMin={10}
+                    yMax={40}
                     data={charts.temperature}
                     config={chartConfig}
                   />
@@ -99,8 +99,8 @@ const App = () => {
                   <Chart
                     title="Humidity"
                     sensor="humidity"
-                    min={0}
-                    max={100}
+                    yMin={0}
+                    yMax={100}
                     data={charts.humidity}
                     config={chartConfig}
                   />
