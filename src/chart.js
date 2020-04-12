@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 
 // TODO Toggleable node view
-const formatDatasets = nodes => {
+const formatDatasets = (config, nodes) => {
+  const { showNicknames } = config
   const datasets = []
 
   nodes.forEach(node => {
@@ -17,7 +18,7 @@ const formatDatasets = nodes => {
       backgroundColor: node.colour,
       borderColor: node.colour,
       pointStyle: 'line',
-      label: node.nodeId,
+      label: (showNicknames && node.nickname) || node.nodeId,
       data
     })
   })
@@ -25,18 +26,16 @@ const formatDatasets = nodes => {
   return datasets
 }
 
-const ChartContainer = ({ title, sensor, data, min, max }) => {
+const ChartContainer = ({ title, sensor, data, min, max, config }) => {
   const [datasets, setDatasets] = useState([])
 
-  const loadDatasets = async () => {
-    const formattedDatasets = formatDatasets(data)
-    console.log(formattedDatasets)
-    setDatasets(formattedDatasets)
+  const loadDatasets = () => {
+    setDatasets(formatDatasets(config, data))
   }
 
   useEffect(() => {
     loadDatasets()
-  }, [data])
+  }, [data, config])
 
   return (
     <>

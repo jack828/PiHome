@@ -8,6 +8,7 @@ import { dom } from '@fortawesome/fontawesome-svg-core'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
+  faMinus,
   faCheck,
   faExclamationTriangle,
   faTimes,
@@ -18,6 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
+  faMinus,
   faCheck,
   faExclamationTriangle,
   faTimes,

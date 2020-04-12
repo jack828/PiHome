@@ -107,17 +107,19 @@ const initRoutes = (serviceLocator, app) => {
 
     const aggregated = rawData.reduce((data, datum) => {
       if (!data[datum.nodeId]) data[datum.nodeId] = []
-      data[datum.nodeId].push(pick(datum, ['value', 'createdDate']))
+      data[datum.nodeId].push(pick(datum, ['nickname', 'value', 'createdDate']))
       return data
     }, {})
     // {
     //  'AB:12:DB:44': [ ... ]
     // }
-    const aggregatedData = Object.keys(aggregated).map(key => ({
-      nodeId: key,
-      colour: nodeData.find(({ nodeId }) => nodeId === key).colour,
-      data: aggregated[key]
-    }))
+    const aggregatedData = Object.keys(aggregated).map(key => {
+      const foundNode = nodeData.find(({ nodeId }) => nodeId === key)
+      return {
+        ...pick(foundNode, ['nodeId', 'colour', 'nickname']),
+        data: aggregated[key]
+      }
+    })
     // [
     //   {
     //     nodeId: 'AB:12:DB:44',

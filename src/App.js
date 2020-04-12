@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Col, Row } from 'reactstrap'
 import Chart from './chart'
 import NodePanel from './node-panel'
+import ChartOptionsPanel from './chart-options-panel'
 
 const api = async uri => {
   const res = await fetch(uri)
@@ -11,9 +12,14 @@ const api = async uri => {
   return await res.json()
 }
 
+const defaultChartConfig = {
+  showNicknames: true
+}
+
 const App = () => {
   const [charts, setCharts] = useState(null)
   const [nodes, setNodes] = useState(null)
+  const [chartConfig, setChartConfig] = useState(defaultChartConfig)
   const loadCharts = async () => {
     const sensors = ['temperature', 'pressure', 'light', 'humidity']
 
@@ -67,6 +73,7 @@ const App = () => {
                     min={10}
                     max={40}
                     data={charts.temperature}
+                    config={chartConfig}
                   />
                 </Col>
                 <Col xs="12" md="6">
@@ -74,13 +81,19 @@ const App = () => {
                     title="Pressure"
                     sensor="pressure"
                     data={charts.pressure}
+                    config={chartConfig}
                   />
                 </Col>
               </Row>
 
               <Row>
                 <Col xs="12" md="6">
-                  <Chart title="Light" sensor="light" data={charts.light} />
+                  <Chart
+                    title="Light"
+                    sensor="light"
+                    data={charts.light}
+                    config={chartConfig}
+                  />
                 </Col>
                 <Col xs="12" md="6">
                   <Chart
@@ -89,6 +102,7 @@ const App = () => {
                     min={0}
                     max={100}
                     data={charts.humidity}
+                    config={chartConfig}
                   />
                 </Col>
               </Row>
@@ -106,7 +120,10 @@ const App = () => {
                   />
                 </Col>
                 <Col xs="12">
-                  <div style={{ border: '1px solid red' }}>Chart Options</div>
+                  <ChartOptionsPanel
+                    config={chartConfig}
+                    setConfig={setChartConfig}
+                  />
                 </Col>
               </>
             )}
