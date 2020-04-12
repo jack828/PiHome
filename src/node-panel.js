@@ -106,8 +106,12 @@ export default ({ nodes, onChangeNickname }) => {
   }
   return (
     <Row>
-      <p>{nodes.length} nodes</p>
       <Table size="sm" dark>
+        <thead>
+          <tr>
+            <th className="text-center">{nodes.length} Nodes</th>
+          </tr>
+        </thead>
         <tbody>
           {nodes.map(node => (
             <Node
