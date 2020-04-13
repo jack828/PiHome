@@ -4,16 +4,21 @@ const manifestConfig = () => ({
   icons: [
     {
       src: 'favicon.ico',
-      sizes: '64x64 32x32 24x24 16x16',
+      sizes: '128x128',
       type: 'image/x-icon'
     },
     {
-      src: 'logo192.png',
+      src: 'icons8-home64.png',
       type: 'image/png',
-      sizes: '192x192'
+      sizes: '64x64'
     },
     {
-      src: 'logo512.png',
+      src: 'icons8-home256.png',
+      type: 'image/png',
+      sizes: '256x256'
+    },
+    {
+      src: 'icons8-home512.png',
       type: 'image/png',
       sizes: '512x512'
     }
