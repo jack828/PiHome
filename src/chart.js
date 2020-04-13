@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
+import 'chartjs-adapter-date-fns'
 
 // TODO Toggleable node view
 const formatDatasets = (config, nodes) => {

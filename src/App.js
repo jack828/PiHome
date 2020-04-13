@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Col, Row } from 'reactstrap'
-import moment from 'moment'
+import sub from 'date-fns/sub'
 import Chart from './chart'
 import NodePanel from './node-panel'
 import ChartOptionsPanel from './chart-options-panel'
@@ -16,31 +16,23 @@ const api = async uri => {
 const createRangeOptions = () => [
   {
     name: '12 h',
-    start: moment()
-      .subtract(12, 'hours')
-      .toISOString(),
-    end: moment().toISOString()
+    start: sub(new Date(), { hours: 12 }).toISOString(),
+    end: new Date().toISOString()
   },
   {
     name: '24 h',
-    start: moment()
-      .subtract(24, 'hours')
-      .toISOString(),
-    end: moment().toISOString()
+    start: sub(new Date(), { hours: 24 }).toISOString(),
+    end: new Date().toISOString()
   },
   {
     name: '7 d',
-    start: moment()
-      .subtract(7, 'days')
-      .toISOString(),
-    end: moment().toISOString()
+    start: sub(new Date(), { days: 7 }).toISOString(),
+    end: new Date().toISOString()
   },
   {
     name: '1 m',
-    start: moment()
-      .subtract(1, 'month')
-      .toISOString(),
-    end: moment().toISOString()
+    start: sub(new Date(), { months: 1 }).toISOString(),
+    end: new Date().toISOString()
   }
 ]
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Table, Row, Input } from 'reactstrap'
-import moment from 'moment'
+import sub from 'date-fns/sub'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Statuses
@@ -8,13 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //  - WARNING - seen greater than 30m ago
 //  - OFFLINE - seen greater than 1 day ago
 const getStatusIcon = lastReading => {
-  const date = moment(lastReading)
-  const thirtyMinAgo = moment().subtract(30, 'minutes')
-  const oneDayAgo = moment().subtract(1, 'day')
+  const date = new Date(lastReading)
+  const thirtyMinAgo = sub(new Date(), { minutes: 30 })
+  const oneDayAgo = sub(new Date(), { days: 1 })
 
-  if (date.isBefore(oneDayAgo)) {
+  if (date < oneDayAgo) {
     return 'times'
-  } else if (date.isBefore(thirtyMinAgo)) {
+  } else if (date < thirtyMinAgo) {
     return 'exclamation-triangle'
   } else {
     return 'check'
@@ -26,7 +26,7 @@ const formatDuration = (start, end) => {
   const MINUTES = 60 * SECONDS
   const HOURS = 60 * MINUTES
   const DAYS = 24 * HOURS
-  const duration = moment().diff(end) // in ms
+  const duration = start - end // in ms
 
   const days = Math.floor(duration / DAYS)
   const hours = Math.floor((duration % DAYS) / HOURS)
@@ -74,8 +74,8 @@ const Node = ({
         onClick={() => setShowUptime(prevState => !prevState)}
       >
         {showUptime
-          ? formatDuration(moment(), lastIdentified)
-          : moment(lastReading).fromNow()}
+          ? formatDuration(new Date(), new Date(lastIdentified))
+          : 'moment(lastReading).fromNow()'}
       </td>
       <td className="col-1">
         <FontAwesomeIcon icon="terminal" />
