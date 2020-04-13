@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Table, Row, Input } from 'reactstrap'
 import sub from 'date-fns/sub'
+import formatRelative from 'date-fns/formatRelative'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Statuses
@@ -75,7 +76,7 @@ const Node = ({
       >
         {showUptime
           ? formatDuration(new Date(), new Date(lastIdentified))
-          : 'moment(lastReading).fromNow()'}
+          : formatRelative(new Date(lastReading), new Date())}
       </td>
       <td className="col-1">
         <FontAwesomeIcon icon="terminal" />
