@@ -15,7 +15,7 @@ const formatDatasets = (config, nodes) => {
     datasets.push({
       fill: false,
       showLine: true,
-      pointRadius: 1,
+      pointRadius: 0.5,
       backgroundColor: node.colour,
       borderColor: node.colour,
       pointStyle: 'line',
