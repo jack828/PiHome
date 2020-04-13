@@ -49,7 +49,10 @@ const defaultChartConfig = () => {
   return {
     showNicknames: true,
     range: rangeOptions[1],
-    rangeOptions
+    rangeOptions,
+    chart: {
+      height: '350px'
+    }
   }
 }
 

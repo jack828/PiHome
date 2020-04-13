@@ -38,54 +38,57 @@ const ChartContainer = ({ title, sensor, data, yMin, yMax, config }) => {
   }, [data, config])
 
   return (
-    <Line
-      title="test"
-      data={{
-        datasets
-      }}
-      legend={{
-        display: true,
-        labels: {
-          fontColor: 'white'
-        }
-      }}
-      options={{
-        title: {
+    <div style={{ height: config.chart.height }}>
+      <Line
+        title="test"
+        data={{
+          datasets
+        }}
+        legend={{
           display: true,
-          text: title,
-          position: 'top',
-          fontSize: 24,
-          fontColor: 'white'
-        },
-        scales: {
-          yAxes: [
-            {
-              gridLines: { color: '#999' },
-              ticks: {
-                fontColor: 'white',
-                suggestedMin: yMin,
-                suggestedMax: yMax
+          labels: {
+            fontColor: 'white'
+          }
+        }}
+        options={{
+          maintainAspectRatio: false,
+          title: {
+            display: true,
+            text: title,
+            position: 'top',
+            fontSize: 24,
+            fontColor: 'white'
+          },
+          scales: {
+            yAxes: [
+              {
+                gridLines: { color: '#999' },
+                ticks: {
+                  fontColor: 'white',
+                  suggestedMin: yMin,
+                  suggestedMax: yMax
+                }
               }
-            }
-          ],
-          xAxes: [
-            {
-              type: 'time',
-              distribution: 'series',
-              time: {
-                unit: 'hour'
-              },
-              gridLines: { color: '#999' },
-              ticks: {
-                fontColor: 'white',
-                suggestedMin: config.range.start,
-                suggestedMax: config.range.end
+            ],
+            xAxes: [
+              {
+                type: 'time',
+                distribution: 'series',
+                time: {
+                  unit: 'hour'
+                },
+                gridLines: { color: '#999' },
+                ticks: {
+                  fontColor: 'white',
+                  suggestedMin: config.range.start,
+                  suggestedMax: config.range.end
+                }
               }
-            }
-          ]
-        }
-      }}
-    />
+            ]
+          }
+        }}
+      />
+    </div>
   )
 }
 
