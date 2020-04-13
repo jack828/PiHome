@@ -1,5 +1,6 @@
 const pick = require('lodash.pick')
 const bodyParser = require('body-parser')
+const { ObjectId } = require('mongodb')
 
 module.exports = (serviceLocator, app) => {
   const { serviceDatabase } = serviceLocator
@@ -52,17 +53,19 @@ module.exports = (serviceLocator, app) => {
     res.json(nodeData)
   })
 
-  app.post('/api/node/rename/:nodeId', bodyParser.text(), async (req, res) => {
-    const { nodeId } = req.params
-    const nickname = req.body.trim()
-    console.log({ nickname })
+  // update node
+  app.post('/api/node', bodyParser.json(), async (req, res) => {
+    // TODO schema!
+    const { _id, ...nodeData } = req.body
+    console.log(_id, nodeData)
 
-    await nodes.findOneAndUpdate(
-      { nodeId },
+    const result = await nodes.findOneAndUpdate(
+      { _id: ObjectId(_id) },
       {
-        $set: { nickname }
+        $set: nodeData
       }
     )
+    console.log(result)
     res.sendStatus(200)
   })
 }

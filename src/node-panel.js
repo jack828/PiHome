@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, Row } from 'reactstrap'
 import Node from './node'
 
-export default ({ nodes, onChangeNickname, onChangeColour }) => {
+export default ({ nodes, onSave }) => {
   if (!nodes || !nodes.length) {
     return <h4>No Nodes!</h4>
   }
@@ -18,9 +18,8 @@ export default ({ nodes, onChangeNickname, onChangeColour }) => {
           {nodes.map(node => (
             <Node
               key={node.nodeId}
-              {...node}
-              onChangeNickname={onChangeNickname}
-              onChangeColour={onChangeColour}
+              node={node}
+              onSave={onSave}
             />
           ))}
         </tbody>

@@ -52,7 +52,7 @@ const App = () => {
   const [charts, setCharts] = useState(null)
   const [nodes, setNodes] = useState(null)
   const [chartConfig, setChartConfig] = useState(defaultChartConfig())
-  const loadCharts = async (rangeOption) => {
+  const loadCharts = async rangeOption => {
     const sensors = ['temperature', 'pressure', 'light', 'humidity']
     const { start, end } = rangeOption || chartConfig.range
 
@@ -71,24 +71,12 @@ const App = () => {
   const loadNodes = async () => setNodes(await api(`/api/nodes`))
   const reloadData = () => Promise.all([loadNodes(), loadCharts()])
 
-  const handleChangeNickname = async (nodeId, nickname) => {
-    console.log('renaming node', nodeId, 'to', nickname)
-    const res = await fetch(`/api/node/rename/${nodeId}/`, {
+  const handleSaveNode = async data => {
+    console.log('updating node', data)
+    const res = await fetch('/api/node', {
       method: 'POST',
-      body: nickname
-    })
-    if (res.status !== 200) {
-      throw new Error('TODO')
-    }
-    console.log(await res.text())
-    reloadData()
-  }
-
-  const handleChangeColour = async (nodeId, colour) => {
-    console.log('renaming node', nodeId, 'to', colour)
-    const res = await fetch(`/api/node/recolour/${nodeId}/`, {
-      method: 'POST',
-      body: colour
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     })
     if (res.status !== 200) {
       throw new Error('TODO')
@@ -156,11 +144,7 @@ const App = () => {
             {nodes && (
               <>
                 <Col xs="12">
-                  <NodePanel
-                    nodes={nodes}
-                    onChangeNickname={handleChangeNickname}
-                    onChangeColour={handleChangeColour}
-                  />
+                  <NodePanel nodes={nodes} onSave={handleSaveNode} />
                 </Col>
                 <Col xs="12">
                   <ChartOptionsPanel

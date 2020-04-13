@@ -44,21 +44,19 @@ const formatDuration = (start, end) => {
 }
 
 const Node = ({
-  nodeId,
-  nickname,
-  colour,
-  lastIdentified,
-  lastReading,
-  onChangeNickname,
-  onChangeColour
+  node,
+  onSave
 }) => {
+  const [data, setData] = useState(node)
   const [editMode, setEditMode] = useState(false)
   const [showUptime, setShowUptime] = useState(false)
-  const displayName = nickname || nodeId
-  const [editedNickname, setEditedNickname] = useState(displayName)
-  const [editedColour, setEditedColour] = useState(colour)
+  const displayName = node.nickname || node.nodeId
   // TODO this makes more sense as embellished info
-  const statusIcon = getStatusIcon(lastReading)
+  const statusIcon = getStatusIcon(node.lastReading)
+  const handleChange = ({ target: { name, value } }) => {
+    setData(prevState => ({ ...prevState, [name]: value }))
+  }
+  console.log(data)
 
   return (
     <tr className="d-flex text-center">
@@ -69,15 +67,13 @@ const Node = ({
           </th>
           <td className="col-4">
             <Input
-              value={editedNickname}
-              onChange={({ target: { value } }) => setEditedNickname(value)}
+              name="nickname"
+              value={data.nickname}
+              onChange={handleChange}
             />
           </td>
           <td className="col-5">
-            <Input
-              value={editedColour}
-              onChange={({ target: { value } }) => setEditedColour(value)}
-            />
+            <Input name="colour" value={data.colour} onChange={handleChange} />
           </td>
           <td className="col-1">
             <FontAwesomeIcon icon="terminal" />
@@ -85,8 +81,7 @@ const Node = ({
           <td className="col-1">
             <div
               onClick={() => {
-                onChangeNickname(nodeId, editedNickname)
-                onChangeColour(nodeId, editedColour)
+                onSave(data)
                 setEditMode(false)
               }}
             >
@@ -99,14 +94,14 @@ const Node = ({
           <th className="col-1" scope="row">
             <FontAwesomeIcon icon={statusIcon} />
           </th>
-          <td className="col-4">displayName</td>
+          <td className="col-4">{displayName}</td>
           <td
             className="col-5"
             onClick={() => setShowUptime(prevState => !prevState)}
           >
             {showUptime
-              ? formatDuration(new Date(), new Date(lastIdentified))
-              : formatRelative(new Date(lastReading), new Date())}
+              ? formatDuration(new Date(), new Date(node.lastIdentified))
+              : formatRelative(new Date(node.lastReading), new Date())}
           </td>
           <td className="col-1">
             <FontAwesomeIcon icon="terminal" />
