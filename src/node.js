@@ -56,7 +56,6 @@ const Node = ({
   const handleChange = ({ target: { name, value } }) => {
     setData(prevState => ({ ...prevState, [name]: value }))
   }
-  console.log(data)
 
   return (
     <tr className="d-flex text-center">
