@@ -46,14 +46,17 @@ const formatDuration = (start, end) => {
 const Node = ({
   nodeId,
   nickname,
+  colour,
   lastIdentified,
   lastReading,
-  onChangeNickname
+  onChangeNickname,
+  onChangeColour
 }) => {
   const [editMode, setEditMode] = useState(false)
   const [showUptime, setShowUptime] = useState(false)
   const displayName = nickname || nodeId
   const [editedNickname, setEditedNickname] = useState(displayName)
+  const [editedColour, setEditedColour] = useState(colour)
 
   return (
     <tr className="d-flex text-center">
@@ -70,6 +73,17 @@ const Node = ({
           displayName
         )}
       </td>
+      {editMode ? (
+
+      <td
+        className="col-5">
+          <Input
+            value={editedColour}
+            onChange={({ target: { value } }) => setEditedColour(value)}
+          />
+      </td>
+      ) : (
+
       <td
         className="col-5"
         onClick={() => setShowUptime(prevState => !prevState)}
@@ -78,6 +92,7 @@ const Node = ({
           ? formatDuration(new Date(), new Date(lastIdentified))
           : formatRelative(new Date(lastReading), new Date())}
       </td>
+        )}
       <td className="col-1">
         <FontAwesomeIcon icon="terminal" />
       </td>
@@ -86,6 +101,7 @@ const Node = ({
           <div
             onClick={() => {
               onChangeNickname(nodeId, editedNickname)
+              onChangeColour(nodeId, editedColour)
               setEditMode(false)
             }}
           >
@@ -101,7 +117,7 @@ const Node = ({
   )
 }
 
-export default ({ nodes, onChangeNickname }) => {
+export default ({ nodes, onChangeNickname, onChangeColour }) => {
   if (!nodes || !nodes.length) {
     return <h4>No Nodes!</h4>
   }
@@ -119,6 +135,7 @@ export default ({ nodes, onChangeNickname }) => {
               key={node.nodeId}
               {...node}
               onChangeNickname={onChangeNickname}
+              onChangeColour={onChangeColour}
             />
           ))}
         </tbody>

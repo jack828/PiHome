@@ -84,6 +84,19 @@ const App = () => {
     reloadData()
   }
 
+  const handleChangeColour = async (nodeId, colour) => {
+    console.log('renaming node', nodeId, 'to', colour)
+    const res = await fetch(`/api/node/recolour/${nodeId}/`, {
+      method: 'POST',
+      body: colour
+    })
+    if (res.status !== 200) {
+      throw new Error('TODO')
+    }
+    console.log(await res.text())
+    reloadData()
+  }
+
   useEffect(() => {
     reloadData()
   }, [])
@@ -146,6 +159,7 @@ const App = () => {
                   <NodePanel
                     nodes={nodes}
                     onChangeNickname={handleChangeNickname}
+                    onChangeColour={handleChangeColour}
                   />
                 </Col>
                 <Col xs="12">
