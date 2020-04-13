@@ -1,5 +1,4 @@
 const hat = require('hat')
-const moment = require('moment')
 const pick = require('lodash.pick')
 const bodyParser = require('body-parser')
 
@@ -102,8 +101,8 @@ const initRoutes = (serviceLocator, app) => {
       collection
         .find({
           createdDate: {
-            $gte: moment(from).toDate(),
-            $lte: moment(to).toDate()
+            $gte: new Date(from),
+            $lte: new Date(to)
           }
         })
         .toArray(),
