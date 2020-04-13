@@ -4,6 +4,7 @@ const app = express()
 const { join } = require('path')
 const initRoutes = require('./routes')
 const initMiddleware = require('./middleware')
+const initPwa = require('./pwa')
 const initDatabase = require('./services/database')
 const config = require('./config.json')
 
@@ -19,6 +20,7 @@ const bootstrap = done => {
     if (error) return done(error)
 
     initMiddleware(serviceLocator, app)
+    initPwa(serviceLocator, app)
     initRoutes(serviceLocator, app)
 
     serviceLocator.register('router', app)
