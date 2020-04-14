@@ -101,7 +101,7 @@ const App = () => {
                     title="Temperature"
                     sensor="temperature"
                     yMin={20}
-                    yMax={34}
+                    yMax={30}
                     data={charts.temperature}
                     config={chartConfig}
                   />
