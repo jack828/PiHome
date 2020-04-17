@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 
-export const NODE_LOAD = 'NODE'
+export const NODE_LOAD = 'NODE_LOAD'
+export const NODE_SAVE = 'NODE_SAVE'
 export const NODE_LOAD_SUCCESS = 'NODE_LOAD_SUCCESS'
 export const NODE_LOAD_FAIL = 'NODE_LOAD_FAIL'
 
@@ -13,6 +14,11 @@ const initialState = Immutable.fromJS({
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'persist/REHYDRATE':
+      return state.merge({
+        loading: true,
+        error: null
+      })
+    case NODE_SAVE:
       return state.merge({
         loading: true,
         error: null
@@ -69,7 +75,7 @@ export const loadNodes = () => async (dispatch, getState) => {
 }
 
 export const save = (data) => async(dispatch, getState) => {
-  // dispatch({ type: NODE_LOAD })
+  dispatch({ type: NODE_SAVE })
   try {
     const res = await fetch(`/api/node`, {
       method: 'POST',
