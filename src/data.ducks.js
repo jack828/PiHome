@@ -85,7 +85,7 @@ export const loadData = ({ sensor }) => async (
       return dispatch({
         type: CHART_LOAD_SUCCESS,
         sensor,
-        datasets: formatDatasets(data, config)
+        datasets: data //formatDatasets(data, config)
       })
     }
     // all else fails, we have errored

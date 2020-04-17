@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import Chart from './Chart'
 import { loadData } from '../data.ducks'
 
-const mapStateToProps = ({ data, config }) => ({
+const mapStateToProps = ({ data, config, node }) => ({
   data: data.toJS(),
-  config: config.toJS()
+  config: config.toJS(),
+  nodes: node.toJS().nodes
 })
 
 const mapDispatchToProps = dispatch => ({
