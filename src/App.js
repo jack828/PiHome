@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Col, Row } from 'reactstrap'
 import sub from 'date-fns/sub'
 import Chart from './chart/'
-import NodePanel from './node-panel'
+import Nodes from './node/'
 import ChartOptionsPanel from './chart-options-panel'
 
 const api = async uri => {
@@ -108,22 +108,18 @@ const App = () => {
         </Col>
         <Col xs={{ size: 12, order: 0 }} lg={{ size: 3, order: 1 }}>
           <Row>
-            {nodes && (
-              <>
-                <Col xs="12">
-                  <NodePanel nodes={nodes} onSave={handleSaveNode} />
-                </Col>
-                <Col xs="12">
-                  <ChartOptionsPanel
-                    config={chartConfig}
-                    setConfig={setChartConfig}
-                    reloadCharts={() => {
-                      /* TODO */
-                    }}
-                  />
-                </Col>
-              </>
-            )}
+            <Col xs="12">
+              <Nodes onSave={handleSaveNode} />
+            </Col>
+            <Col xs="12">
+              <ChartOptionsPanel
+                config={chartConfig}
+                setConfig={setChartConfig}
+                reloadCharts={() => {
+                  /* TODO */
+                }}
+              />
+            </Col>
           </Row>
         </Col>
       </Row>
