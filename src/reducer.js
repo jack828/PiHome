@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-const test = () => f => f
+import data from './data.ducks.js'
 
-const reducer = combineReducers({ test })
+const reducer = combineReducers({ data })
 
 export default (state, action) => {
   if (action.type === 'RESET_ALL') {
