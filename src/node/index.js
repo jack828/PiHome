@@ -8,7 +8,6 @@ const mapDispatchToProps = dispatch => ({
   onSave: options => dispatch(save(options))
 })
 
-// export default Node
 export default connect(
   mapStateToProps,
   mapDispatchToProps

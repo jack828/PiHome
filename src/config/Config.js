@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Table, Col, Row, Button, ButtonGroup } from 'reactstrap'
+import React from 'react'
+import { Table, Row, Button, ButtonGroup } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default ({ config, setConfig, reloadCharts }) => {

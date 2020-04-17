@@ -10,7 +10,7 @@ const Chart = ({ data, loadData, title, sensor, yMin, yMax, config }) => {
   } = data
 
   useEffect(() => {
-    loadData({ sensor, config })
+    loadData({ sensor })
   }, [])
 
   return (

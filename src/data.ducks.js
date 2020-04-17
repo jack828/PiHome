@@ -65,10 +65,11 @@ const formatDatasets = (data, config) => {
   return datasets
 }
 
-export const loadData = ({ sensor, config }) => async (
+export const loadData = ({ sensor }) => async (
   dispatch,
   getState
 ) => {
+  const config = getState().config.toJS()
   dispatch({ type: CHART_LOAD, sensor })
   try {
     const { start, end } = config.range

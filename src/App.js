@@ -1,55 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Container, Col, Row } from 'reactstrap'
-import sub from 'date-fns/sub'
 import Chart from './chart/'
 import Nodes from './nodes/'
-import ChartOptionsPanel from './chart-options-panel'
-
-const api = async uri => {
-  const res = await fetch(uri)
-  if (res.status !== 200) {
-    throw new Error('TODO')
-  }
-  return await res.json()
-}
-
-const createRangeOptions = () => [
-  {
-    name: '12 h',
-    start: sub(new Date(), { hours: 12 }).toISOString(),
-    end: new Date().toISOString()
-  },
-  {
-    name: '24 h',
-    start: sub(new Date(), { hours: 24 }).toISOString(),
-    end: new Date().toISOString()
-  },
-  {
-    name: '7 d',
-    start: sub(new Date(), { days: 7 }).toISOString(),
-    end: new Date().toISOString()
-  },
-  {
-    name: '1 m',
-    start: sub(new Date(), { months: 1 }).toISOString(),
-    end: new Date().toISOString()
-  }
-]
-
-const defaultChartConfig = () => {
-  const rangeOptions = createRangeOptions()
-  return {
-    showNicknames: true,
-    range: rangeOptions[1],
-    rangeOptions,
-    chart: {
-      height: '350px'
-    }
-  }
-}
+import Config from './config/'
 
 const App = () => {
-  const [chartConfig, setChartConfig] = useState(defaultChartConfig())
   return (
     <Container fluid>
       <Row>
@@ -61,26 +16,19 @@ const App = () => {
                 sensor="temperature"
                 yMin={20}
                 yMax={30}
-                config={chartConfig}
               />
             </Col>
             <Col xs="12" md="6">
-              <Chart title="Pressure" sensor="pressure" config={chartConfig} />
+              <Chart title="Pressure" sensor="pressure" />
             </Col>
           </Row>
 
           <Row>
             <Col xs="12" md="6">
-              <Chart title="Light" sensor="light" config={chartConfig} />
+              <Chart title="Light" sensor="light" />
             </Col>
             <Col xs="12" md="6">
-              <Chart
-                title="Humidity"
-                sensor="humidity"
-                yMin={0}
-                yMax={100}
-                config={chartConfig}
-              />
+              <Chart title="Humidity" sensor="humidity" yMin={0} yMax={100} />
             </Col>
           </Row>
         </Col>
@@ -90,13 +38,7 @@ const App = () => {
               <Nodes />
             </Col>
             <Col xs="12">
-              <ChartOptionsPanel
-                config={chartConfig}
-                setConfig={setChartConfig}
-                reloadCharts={() => {
-                  /* TODO */
-                }}
-              />
+              <Config />
             </Col>
           </Row>
         </Col>
