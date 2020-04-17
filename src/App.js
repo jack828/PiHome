@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Col, Row } from 'reactstrap'
 import sub from 'date-fns/sub'
 import Chart from './chart/'
-import Nodes from './node/'
+import Nodes from './nodes/'
 import ChartOptionsPanel from './chart-options-panel'
 
 const api = async uri => {
@@ -49,29 +49,7 @@ const defaultChartConfig = () => {
 }
 
 const App = () => {
-  const [nodes, setNodes] = useState(null)
   const [chartConfig, setChartConfig] = useState(defaultChartConfig())
-  const loadNodes = async () => setNodes(await api(`/api/nodes`))
-  const reloadData = () => Promise.all([loadNodes()])
-
-  const handleSaveNode = async data => {
-    console.log('updating node', data)
-    const res = await fetch('/api/node', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    if (res.status !== 200) {
-      throw new Error('TODO')
-    }
-    console.log(await res.text())
-    reloadData()
-  }
-
-  useEffect(() => {
-    reloadData()
-  }, [])
-
   return (
     <Container fluid>
       <Row>
@@ -109,7 +87,7 @@ const App = () => {
         <Col xs={{ size: 12, order: 0 }} lg={{ size: 3, order: 1 }}>
           <Row>
             <Col xs="12">
-              <Nodes onSave={handleSaveNode} />
+              <Nodes />
             </Col>
             <Col xs="12">
               <ChartOptionsPanel

@@ -31,10 +31,7 @@ const Nodes = ({ node: { loading, error, nodes }, loadNodes }) => {
               {nodes.map(node => (
                 <Node
                   key={node.nodeId}
-                  node={node}
-                  onSave={() => {
-                    /* TODO */
-                  }}
+                  data={node}
                 />
               ))}
             </tbody>

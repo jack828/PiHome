@@ -1,16 +1,15 @@
 import { connect } from 'react-redux'
-import Nodes from './Nodes'
-import { loadNodes } from '../node.ducks'
+import Node from './Node'
+import { save } from '../node.ducks'
 
-const mapStateToProps = ({ node }) => ({
-  node: node.toJS()
-})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
-  loadNodes: options => dispatch(loadNodes(options))
+  onSave: options => dispatch(save(options))
 })
 
+// export default Node
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Nodes)
+)(Node)

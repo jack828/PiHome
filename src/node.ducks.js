@@ -67,3 +67,31 @@ export const loadNodes = () => async (dispatch, getState) => {
     })
   }
 }
+
+export const save = (data) => async(dispatch, getState) => {
+  // dispatch({ type: NODE_LOAD })
+  try {
+    const res = await fetch(`/api/node`, {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    const response = await res.text()
+    console.log(response)
+    if (res.status === 200) {
+      return dispatch(loadNodes())
+    }
+    return // TODO
+    // all else fails, we have errored
+    dispatch({ type: NODE_LOAD_FAIL, error: response })
+  } catch (error) {
+    console.error(error)
+    return // TODO
+    return dispatch({
+      type: NODE_LOAD_FAIL,
+      error: 'There was an issue doing that. Please try again later.'
+    })
+  }
+}
