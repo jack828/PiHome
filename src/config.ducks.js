@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 import sub from 'date-fns/sub'
 
-export const CONFIG_UPDATE = 'CONFIG_UPDATE'
 export const CONFIG_TOGGLE = 'CONFIG_TOGGLE'
+export const CONFIG_RANGE_CHANGE = 'CONFIG_RANGE_CHANGE'
 
 const createRangeOptions = () => [
   {
@@ -43,20 +43,12 @@ const reducer = (state = initialState, action) => {
         range: createRangeOptions()[1],
         rangeOptions: createRangeOptions()
       })
-    case CONFIG_UPDATE:
+    case CONFIG_RANGE_CHANGE:
       return state.merge({
-        ...action.data
+        range: action.range
       })
     case CONFIG_TOGGLE:
       return state.update(action.property, value => !value)
-    // setConfig(prevState => ({
-    // ...prevState,
-    // range: {
-    // ...prevState.range,
-    // ...option
-    // }
-    // }))
-    // reloadCharts(option)
     default:
       return state
   }
@@ -69,7 +61,9 @@ export const toggle = property => ({
   property
 })
 
-export const save = data => ({
-  type: CONFIG_UPDATE,
-  data
-})
+export const changeRange = range => dispatch => {
+  dispatch({
+    type: CONFIG_RANGE_CHANGE,
+    range
+  })
+}

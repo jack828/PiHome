@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, Row, Button, ButtonGroup } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default ({ config, onToggle, setRangeOption }) => (
+export default ({ config, onToggle, onChangeRange }) => (
   <Row>
     <Table size="sm" dark>
       <thead>
@@ -34,7 +34,7 @@ export default ({ config, onToggle, setRangeOption }) => (
                   className="w-100"
                   key={option.name}
                   active={config.range.name === option.name}
-                  onClick={() => setRangeOption(option)}
+                  onClick={() => onChangeRange(option)}
                 >
                   {option.name}
                 </Button>

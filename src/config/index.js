@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import Config from './Config'
-import { toggle } from '../config.ducks'
+import { toggle, changeRange } from '../config.ducks'
 
 const mapStateToProps = ({ config }) => ({ config: config.toJS() })
 
 const mapDispatchToProps = dispatch => ({
-  onToggle: options => dispatch(toggle(options))
+  onToggle: options => dispatch(toggle(options)),
+  onChangeRange: options => dispatch(changeRange(options))
 })
 
 export default connect(
