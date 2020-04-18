@@ -91,7 +91,7 @@ const Chart = ({
               tickFormatter={formatTick}
             />
             <CartesianGrid strokeDasharray="3 3" />
-            <Legend />
+            <Legend verticalAlign="top" height={36} />
             {nodes.map(node => (
               <Line
                 key={node.nodeId}
