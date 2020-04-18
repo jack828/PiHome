@@ -71,8 +71,23 @@ const Chart = ({
   }
   const formatTick = value => {
     // console.log('tickformat', value, format(new Date(value), 'HH:MM'))
-    return format(new Date(value), 'HH')
+    return format(new Date(value), 'HH:mm')
   }
+  const CustomTick = ({ x, y, stroke, payload }) => (
+    <g transform={`translate(${x},${y})`}>
+      <text
+        x={0}
+        y={0}
+        dy={16}
+        textAnchor="end"
+        fill="#666"
+        transform="rotate(-35)"
+      >
+        {formatTick(payload.value)}
+      </text>
+    </g>
+  )
+
   return (
     <div style={{ height: config.chart.height }}>
       {loading && <h4>Loading</h4>}
@@ -81,13 +96,14 @@ const Chart = ({
       <h4>{title}</h4>
       {datasets && !error && !loading && (
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={formatData(datasets)}>
+          <LineChart data={formatData(datasets)} margin={{ bottom: 36 }}>
             <YAxis dataKey="value" domain={['auto', 'auto']} />
             <XAxis
               type="number"
               scale="time"
               domain={['dataMin', 'dataMax']}
               dataKey="createdDate"
+              tick={CustomTick}
               tickFormatter={formatTick}
             />
             <CartesianGrid strokeDasharray="3 3" />
