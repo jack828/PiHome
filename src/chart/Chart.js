@@ -97,6 +97,7 @@ const Chart = ({
                 key={node.nodeId}
                 dot={false}
                 type="monotone"
+                name={(config.showNicknames && node.nickname) ?? node.nodeId}
                 stroke={node.colour}
                 dataKey={node.nodeId}
               />
