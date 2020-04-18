@@ -98,7 +98,13 @@ const Chart = ({
       {datasets && !error && !loading && (
         <ResponsiveContainer width="100%" height={config.chart.height}>
           <LineChart data={formatData(datasets)} margin={{ bottom: 36 }}>
-            <YAxis dataKey="value" domain={['auto', 'auto']} />
+            <YAxis
+              type="number"
+              allowDecimals={false}
+              width={50}
+              dataKey="value"
+              domain={['auto', 'auto']}
+            />
             <XAxis
               type="number"
               scale="time"
