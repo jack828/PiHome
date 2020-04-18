@@ -5,9 +5,7 @@ import {
   Line,
   XAxis,
   YAxis,
-  CartesianAxis,
   CartesianGrid,
-  Tooltip,
   Legend
 } from 'recharts'
 import format from 'date-fns/format'
