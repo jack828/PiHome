@@ -58,16 +58,20 @@ const Chart = ({
     const formatted = datasets.reduce(
       (output, { data, ...node }) => [
         ...output,
-        ...data.map(data => ({ ...data, [node.nodeId]: data.value }))
+        ...data.map(data => ({
+          ...data,
+          createdDate: new Date(data.createdDate).getTime(),
+          [node.nodeId]: data.value
+        }))
       ],
       []
     )
-    console.log(formatted)
+    // console.log(formatted)
     return formatted
   }
-  const formatTick = ({ payload: { value } }) => {
+  const formatTick = value => {
     // console.log('tickformat', value, format(new Date(value), 'HH:MM'))
-    return format(new Date(value), 'HH:MM')
+    return format(new Date(value), 'HH')
   }
   return (
     <div style={{ height: config.chart.height }}>
@@ -79,7 +83,13 @@ const Chart = ({
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={formatData(datasets)}>
             <YAxis dataKey="value" />
-            <XAxis dataKey="createdDate" tick={formatTick} />
+            <XAxis
+              type="number"
+              scale="time"
+              domain={['dataMin', 'dataMax']}
+              dataKey="createdDate"
+              tickFormatter={formatTick}
+            />
             <CartesianGrid strokeDasharray="3 3" />
             <Legend />
             {nodes.map(node => (
