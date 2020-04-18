@@ -60,8 +60,9 @@ const Chart = ({
         ...output,
         ...data.map(data => ({
           ...data,
+          value: Number(data.value),
           createdDate: new Date(data.createdDate).getTime(),
-          [node.nodeId]: data.value
+          [node.nodeId]: Number(data.value)
         }))
       ],
       []
