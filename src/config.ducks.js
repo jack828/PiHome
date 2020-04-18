@@ -32,7 +32,7 @@ const initialState = Immutable.fromJS({
   range: createRangeOptions()[1],
   rangeOptions: createRangeOptions(),
   chart: {
-    height: '350px'
+    height: 350
   }
 })
 

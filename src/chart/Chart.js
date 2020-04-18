@@ -89,13 +89,13 @@ const Chart = ({
   )
 
   return (
-    <div style={{ height: config.chart.height }}>
+    <div style={{ height: `${config.chart.height + 50}px` }}>
       {loading && <h4>Loading</h4>}
 
       {error && <h4>{title} load error</h4>}
       <h4>{title}</h4>
       {datasets && !error && !loading && (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={config.chart.height}>
           <LineChart data={formatData(datasets)} margin={{ bottom: 36 }}>
             <YAxis dataKey="value" domain={['auto', 'auto']} />
             <XAxis
