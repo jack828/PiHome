@@ -21,29 +21,19 @@ module.exports = (serviceLocator, app) => {
         .toArray(),
       nodes.find({}).toArray()
     ])
+    const nodeIndex = nodeData.reduce(
+      (index, node) => ({ ...index, [node.nodeId]: node }),
+      {}
+    )
 
-    const aggregated = rawData.reduce((data, datum) => {
-      if (!data[datum.nodeId]) data[datum.nodeId] = []
-      data[datum.nodeId].push(pick(datum, ['nickname', 'value', 'createdDate']))
-      return data
-    }, {})
-    // {
-    //  'AB:12:DB:44': [ ... ]
-    // }
-    const aggregatedData = Object.keys(aggregated).map(key => {
-      const foundNode = nodeData.find(({ nodeId }) => nodeId === key)
-      return {
-        ...pick(foundNode, ['nodeId', 'colour', 'nickname']),
-        data: aggregated[key]
-      }
-    })
-    // [
-    //   {
-    //     nodeId: 'AB:12:DB:44',
-    //     data: [ ... ]
-    //   }
-    // ]
-    res.json(aggregatedData)
+    const resolvedData = rawData.map(({ _id, ...datum }) => ({
+      ...datum,
+      value: parseInt(datum.value, 10),
+      createdDate: new Date(datum.createdDate).getTime(),
+      [datum.nodeId]: parseInt(datum.value, 10)
+    }))
+
+    res.json(resolvedData)
   })
 
   app.get('/api/nodes', async (req, res) => {

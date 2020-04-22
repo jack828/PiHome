@@ -53,21 +53,6 @@ const Chart = ({
         label: 'ESP32 BATT OLED'
       }
     ]
-    const formatted = datasets.reduce(
-      (output, { data, ...node }) => [
-        ...output,
-        ...data.map(data => ({
-          ...data,
-          value: Number(data.value),
-          createdDate: new Date(data.createdDate).getTime(),
-          [node.nodeId]: Number(data.value)
-        }))
-      ],
-      []
-    )
-    // console.log(formatted)
-    return formatted
-  }
   const formatTick = value => {
     // console.log('tickformat', value, format(new Date(value), 'HH:MM'))
     return format(new Date(value), 'HH:mm')
@@ -95,7 +80,7 @@ const Chart = ({
       <h4>{title}</h4>
       {datasets && !error && !loading && (
         <ResponsiveContainer width="100%" height={config.chart.height}>
-          <LineChart data={formatData(datasets)} margin={{ bottom: 36 }}>
+          <LineChart data={datasets} margin={{ bottom: 36 }}>
             <YAxis
               type="number"
               allowDecimals={false}
