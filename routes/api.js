@@ -28,9 +28,9 @@ module.exports = (serviceLocator, app) => {
 
     const resolvedData = rawData.map(({ _id, ...datum }) => ({
       ...datum,
-      value: parseInt(datum.value, 10),
+      value: Number(datum.value),
       createdDate: new Date(datum.createdDate).getTime(),
-      [datum.nodeId]: parseInt(datum.value, 10)
+      [datum.nodeId]: Number(datum.value)
     }))
 
     res.json(resolvedData)
