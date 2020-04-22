@@ -29,7 +29,7 @@ const createRangeOptions = () => [
 
 const initialState = Immutable.fromJS({
   showNicknames: true,
-  range: createRangeOptions()[1],
+  rangeKey: '24 h',
   rangeOptions: createRangeOptions(),
   chart: {
     height: 350
@@ -40,12 +40,12 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'persist/REHYDRATE':
       return state.merge({
-        range: createRangeOptions()[1],
+        range: '24 h',
         rangeOptions: createRangeOptions()
       })
     case CONFIG_RANGE_CHANGE:
       return state.merge({
-        range: action.range
+        rangeKey: action.rangeKey
       })
     case CONFIG_TOGGLE:
       return state.update(action.property, value => !value)
@@ -61,9 +61,9 @@ export const toggle = property => ({
   property
 })
 
-export const changeRange = range => dispatch => {
+export const changeRange = rangeKey => dispatch => {
   dispatch({
     type: CONFIG_RANGE_CHANGE,
-    range
+    rangeKey
   })
 }

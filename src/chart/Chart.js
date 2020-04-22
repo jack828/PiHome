@@ -28,7 +28,7 @@ const Chart = ({
 
   useEffect(() => {
     loadData({ sensor })
-  }, [])
+  }, [config.rangeKey])
 
   const formatTick = value => {
     // console.log('tickformat', value, format(new Date(value), 'HH:MM'))

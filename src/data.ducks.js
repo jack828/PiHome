@@ -65,14 +65,13 @@ const formatDatasets = (data, config) => {
   return datasets
 }
 
-export const loadData = ({ sensor }) => async (
-  dispatch,
-  getState
-) => {
+export const loadData = ({ sensor }) => async (dispatch, getState) => {
   const config = getState().config.toJS()
   dispatch({ type: CHART_LOAD, sensor })
   try {
-    const { start, end } = config.range
+    const { rangeKey, rangeOptions } = config
+    const range = rangeOptions.find(({ name }) => name === rangeKey)
+    const { start, end } = range
     const res = await fetch(`/api/sensor/${sensor}/${start}/${end}`, {
       method: 'GET'
       // headers: {

@@ -33,8 +33,8 @@ export default ({ config, onToggle, onChangeRange }) => (
                 <Button
                   className="w-100"
                   key={option.name}
-                  active={config.range.name === option.name}
-                  onClick={() => onChangeRange(option)}
+                  active={option.name === config.rangeKey}
+                  onClick={() => onChangeRange(option.name)}
                 >
                   {option.name}
                 </Button>
