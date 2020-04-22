@@ -40,31 +40,6 @@ const reducer = (state = initialState, action) => {
 
 export default reducer
 
-const formatDatasets = (data, config) => {
-  const { showNicknames } = config
-  const datasets = []
-
-  if (!data) return data
-  data.forEach(node => {
-    const data = node.data.map(({ createdDate, value }) => ({
-      x: new Date(createdDate),
-      y: value
-    }))
-    datasets.push({
-      fill: false,
-      showLine: true,
-      pointRadius: 0.5,
-      backgroundColor: node.colour,
-      borderColor: node.colour,
-      pointStyle: 'line',
-      label: (showNicknames && node.nickname) || node.nodeId,
-      data
-    })
-  })
-
-  return datasets
-}
-
 export const loadData = ({ sensor }) => async (dispatch, getState) => {
   const config = getState().config.toJS()
   dispatch({ type: CHART_LOAD, sensor })
