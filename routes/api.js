@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb')
 module.exports = (serviceLocator, app) => {
   const { serviceDatabase } = serviceLocator
   const nodes = serviceDatabase.collection('node')
-  // Sends an array of points for each nodeId
+
   app.get('/api/sensor/:collectionName/:from/:to', async (req, res) => {
     const { collectionName, from, to } = req.params
     const collection = serviceDatabase.collection(collectionName)
@@ -17,6 +17,7 @@ module.exports = (serviceLocator, app) => {
             $lte: new Date(to)
           }
         })
+        .sort({ createdDate: -1 })
         .toArray(),
       nodes.find({}).toArray()
     ])
