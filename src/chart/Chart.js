@@ -30,29 +30,6 @@ const Chart = ({
     loadData({ sensor })
   }, [])
 
-  const formatData = sets => {
-    let a = [
-      {
-        nodeId: 'A4:CF:12:26:03:9C',
-        colour: '#d8d8d8',
-        nickname: 'ESP32',
-        data: Array(93)
-      },
-      {
-        nodeId: 'CC:50:E3:A1:0D:80',
-        colour: '#97da61',
-        nickname: 'ESP32 BATTTt',
-        data: Array(91)
-      }
-    ]
-    const out = [
-      {
-        createdDate: new Date(),
-        value: 42,
-        colour: '#d8d8d8',
-        label: 'ESP32 BATT OLED'
-      }
-    ]
   const formatTick = value => {
     // console.log('tickformat', value, format(new Date(value), 'HH:MM'))
     return format(new Date(value), 'HH:mm')
@@ -115,55 +92,5 @@ const Chart = ({
     </div>
   )
 }
-/*
-        <Line
-          title="test"
-          data={{
-            datasets
-          }}
-          legend={{
-            display: true,
-            labels: {
-              fontColor: 'white'
-            }
-          }}
-          options={{
-            maintainAspectRatio: false,
-            title: {
-              display: true,
-              text: title,
-              position: 'top',
-              fontSize: 24,
-              fontColor: 'white'
-            },
-            scales: {
-              yAxes: [
-                {
-                  gridLines: { color: '#999' },
-                  ticks: {
-                    fontColor: 'white',
-                    suggestedMin: yMin,
-                    suggestedMax: yMax
-                  }
-                }
-              ],
-              xAxes: [
-                {
-                  type: 'time',
-                  distribution: 'series',
-                  time: {
-                    unit: 'minute'
-                  },
-                  gridLines: { color: '#999' },
-                  ticks: {
-                    fontColor: 'white',
-                    suggestedMin: config.range.start,
-                    suggestedMax: config.range.end
-                  }
-                }
-              ]
-            }
-          }}
-        />
-        */
+
 export default Chart
