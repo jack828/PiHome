@@ -51,10 +51,11 @@ const Chart = ({
 
   return (
     <div style={{ height: `${config.chart.height + 50}px` }}>
-      {loading && <h4>Loading</h4>}
-
-      {error && <h4>{title} load error</h4>}
-      <h4>{title}</h4>
+      <h4>
+        {title}
+        {loading && ' - loading....'}
+        {error && ` - error - ${error}`}
+      </h4>
       {datasets && (
         <ResponsiveContainer width="100%" height={config.chart.height}>
           <LineChart data={datasets} margin={{ bottom: 36 }}>
