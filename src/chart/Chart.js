@@ -55,7 +55,7 @@ const Chart = ({
 
       {error && <h4>{title} load error</h4>}
       <h4>{title}</h4>
-      {datasets && !error && !loading && (
+      {datasets && (
         <ResponsiveContainer width="100%" height={config.chart.height}>
           <LineChart data={datasets} margin={{ bottom: 36 }}>
             <YAxis
