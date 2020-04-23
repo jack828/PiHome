@@ -77,6 +77,7 @@ const Chart = ({
             <Legend verticalAlign="top" height={36} />
             {nodes.map(node => (
               <Line
+                connectNulls
                 key={node.nodeId}
                 dot={false}
                 type="monotone"
