@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-export const CHART_LOAD = 'LOGIN'
+export const CHART_LOAD = 'CHART_LOAD'
 export const CHART_LOAD_SUCCESS = 'CHART_LOAD_SUCCESS'
 export const CHART_LOAD_FAIL = 'CHART_LOAD_FAIL'
 
