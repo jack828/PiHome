@@ -14,6 +14,16 @@ This is not designed to be safe, secure, or in any way public.
 The endpoints provided by this server will be, for all intents and purposes, completely unauthenticated and open.
 I **strongly** recommend not leaving this public.
 
+## Development Data
+
+You can copy all the data from your pi by first creating a tunnel:
+
+```
+$ ssh -L 27018:localhost:27017 pihome
+```
+
+Then just `yarn db:copy` to bring it into your local mongo.
+
 ## License
 
 GNU GPL v3
