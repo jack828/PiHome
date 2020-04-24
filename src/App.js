@@ -1,11 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Container, Col, Row } from 'reactstrap'
 import Chart from './chart/'
 import Nodes from './nodes/'
 import Config from './config/'
 import StatusPanel from './status-panel/'
 
-const App = () => {
+const App = ({ sensors }) => {
   return (
     <Container fluid>
       <Row>
@@ -16,23 +17,30 @@ const App = () => {
           <Row>
             <Col xs="12" md="6">
               <Chart
-                title="Temperature"
                 sensor="temperature"
-                yMin={20}
-                yMax={30}
+                {...sensors[0]}
               />
             </Col>
             <Col xs="12" md="6">
-              <Chart title="Pressure" sensor="pressure" />
+              <Chart
+                sensor="pressure"
+                {...sensors[1]}
+              />
             </Col>
           </Row>
 
           <Row>
             <Col xs="12" md="6">
-              <Chart title="Light" sensor="light" />
+              <Chart
+                sensor="humidity"
+                {...sensors[2]}
+              />
             </Col>
             <Col xs="12" md="6">
-              <Chart title="Humidity" sensor="humidity" yMin={0} yMax={100} />
+              <Chart
+                sensor="light"
+                {...sensors[3]}
+              />
             </Col>
           </Row>
         </Col>
@@ -51,4 +59,13 @@ const App = () => {
   )
 }
 
-export default App
+const mapStateToProps = ({ data }) => ({
+  sensors: data.get('sensors').toJS()
+})
+
+const mapDispatchToProps = dispatch => ({})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
