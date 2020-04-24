@@ -4,12 +4,18 @@ const { ObjectId } = require('mongodb')
 
 module.exports = (serviceLocator, app) => {
   const { serviceDatabase } = serviceLocator
-  const nodes = serviceDatabase.collection('node')
+  const nodeCollection = serviceDatabase.collection('node')
+  const sensorCollections = {
+    temperature: serviceDatabase.collection('temperature'),
+    humidity: serviceDatabase.collection('humidity'),
+    pressure: serviceDatabase.collection('pressure'),
+    light: serviceDatabase.collection('light')
+  }
 
   app.get('/api/sensor/:collectionName/:from/:to', async (req, res) => {
     const { collectionName, from, to } = req.params
     const collection = serviceDatabase.collection(collectionName)
-    const [rawData, nodeData] = await Promise.all([
+    const [rawData, nodes] = await Promise.all([
       collection
         .find({
           createdDate: {
@@ -19,9 +25,9 @@ module.exports = (serviceLocator, app) => {
         })
         .sort({ createdDate: -1 })
         .toArray(),
-      nodes.find({}).toArray()
+      nodeCollection.find({}).toArray()
     ])
-    const nodeIndex = nodeData.reduce(
+    const nodeIndex = nodes.reduce(
       (index, node) => ({ ...index, [node.nodeId]: node }),
       {}
     )
@@ -37,11 +43,35 @@ module.exports = (serviceLocator, app) => {
   })
 
   app.get('/api/nodes', async (req, res) => {
-    const nodeData = await nodes
+    const nodes = await nodeCollection
       .find({})
       .sort({ lastReading: -1 })
       .toArray()
-    res.json(nodeData)
+
+    const getSensorReadings = (nodeId, sensor) =>
+      sensorCollections[sensor].findOne({ nodeId }, { createdDate: -1 })
+    const nodeIds = nodes.map(({ nodeId }) => nodeId)
+
+    const nodeReadings = await Promise.all(
+      nodeIds.map(async nodeId => {
+        const sensors = Object.keys(sensorCollections)
+        console.log({nodeId, sensors})
+        const sensorReadings = await Promise.all(
+          sensors.map(sensor => getSensorReadings(nodeId, sensor))
+        )
+        return sensors.reduce((readings, sensor, index) => ({
+          ...readings,
+          [sensor]: sensorReadings[index]
+        }), {})
+      })
+    )
+    console.log(nodeReadings)
+    res.json([
+      ...nodes.map(node => ({
+        ...node,
+        recentReadings: nodeReadings[nodeIds.indexOf(node.nodeId)]
+      }))
+    ])
   })
 
   // update node
@@ -50,7 +80,7 @@ module.exports = (serviceLocator, app) => {
     const { _id, ...nodeData } = req.body
     console.log(_id, nodeData)
 
-    const result = await nodes.findOneAndUpdate(
+    const result = await nodeCollection.findOneAndUpdate(
       { _id: ObjectId(_id) },
       {
         $set: nodeData
