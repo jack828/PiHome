@@ -6,10 +6,17 @@ export const CHART_LOAD_FAIL = 'CHART_LOAD_FAIL'
 
 const initialState = Immutable.fromJS({
   sensors: [
-    { name: 'temperature', title: 'Temperature', unit: 'C', yMin: 20, yMax: 30 },
-    { name: 'pressure', title: 'Pressure', unit: 'hPa' },
-    { name: 'humidity', title: 'Humidity', unit: '%RH' },
-    { name: 'light', title: 'Light', unit: 'lux' }
+    {
+      name: 'temperature',
+      title: 'Temperature',
+      unit: '°C',
+      precision: 1,
+      yMin: 20,
+      yMax: 30
+    },
+    { name: 'pressure', title: 'Pressure', unit: 'hPa', precision: 0 },
+    { name: 'humidity', title: 'Humidity', unit: '%RH', precision: 0 },
+    { name: 'light', title: 'Light', unit: 'lux', precision: 0 }
   ],
   loading: {},
   error: {},

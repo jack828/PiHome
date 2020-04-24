@@ -13,29 +13,32 @@ const StatusPanel = ({ nodes, sensors, config }) => {
             sensor
           }))
           .filter(({ value }) => !isNaN(value))
-
         return (
           <Col
-            style={{ border: '1px solid pink' }}
+            style={{
+              border: '1px solid #d8d8d8'
+            }}
             key={`Status-Node-${nodeId.replace(/:/g, '')}`}
           >
             {(config.showNicknames && nickname) || nodeId}
             <Row
-              style={{
-                border: '1px solid red'
-              }}
+              style={
+                {
+                  // border: '1px solid #dfdfdf'
+                }
+              }
             >
-              {readings.map(reading => (
+              {readings.map(({ value, sensor: { unit, precision } }) => (
                 <Col
                   xs="6"
                   style={{
-                    border: '1px solid green',
+                    // border: '1px solid #dfdfdf',
                     textAlign: 'center'
                   }}
                 >
                   <h3>
-                    {Number(reading.value).toFixed(0)}
-                    {reading.sensor.unit}
+                    {Number(value).toFixed(precision)}
+                    {unit}
                   </h3>
                 </Col>
               ))}
