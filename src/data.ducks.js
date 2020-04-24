@@ -9,7 +9,7 @@ const initialState = Immutable.fromJS({
     { name: 'temperature', title: 'Temperature', unit: 'C', yMin: 20, yMax: 30 },
     { name: 'pressure', title: 'Pressure', unit: 'hPa' },
     { name: 'humidity', title: 'Humidity', unit: '%' },
-    { name: 'Light', title: 'Light', unit: 'lux' }
+    { name: 'light', title: 'Light', unit: 'lux' }
   ],
   loading: {},
   error: {},
