@@ -1,12 +1,12 @@
 import React from 'react'
 import { Col, Row } from 'reactstrap'
 
-const StatusPanel = ({ nodes, sensors }) => {
+const StatusPanel = ({ nodes, sensors, config }) => {
   if (!nodes || !sensors) return null
   // TODO indicator that it's OLD data
   return (
     <Row>
-      {nodes.map(({ nickname, recentReadings }) => {
+      {nodes.map(({ nodeId, nickname, recentReadings }) => {
         const readings = sensors
           .map(sensor => ({
             ...recentReadings[sensor.name],
@@ -15,8 +15,11 @@ const StatusPanel = ({ nodes, sensors }) => {
           .filter(({ value }) => !isNaN(value))
 
         return (
-          <Col style={{ border: '1px solid pink' }}>
-            {nickname}
+          <Col
+            style={{ border: '1px solid pink' }}
+            key={`Status-Node-${nodeId.replace(/:/g, '')}`}
+          >
+            {(config.showNicknames && nickname) || nodeId}
             <Row
               style={{
                 border: '1px solid red'
