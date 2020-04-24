@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Container, Col, Row } from 'reactstrap'
+import React from 'react'
+import { Col, Row } from 'reactstrap'
 
 const StatusPanel = ({ nodes, sensors }) => {
   if (!nodes || !sensors) return null
@@ -12,28 +12,28 @@ const StatusPanel = ({ nodes, sensors }) => {
             ...recentReadings[sensor.name],
             sensor
           }))
-          // .filter(({ value }) => typeof value !== 'undefined')
+          .filter(({ value }) => !isNaN(value))
 
-        console.log({nickname, recentReadings, readings})
         return (
           <Col style={{ border: '1px solid pink' }}>
             {nickname}
             <Row
               style={{
                 border: '1px solid red'
-                // width: '10%',
-                // height: '100px'
               }}
             >
               {readings.map(reading => (
                 <Col
-                  xs={readings.length % 2}
+                  xs="6"
                   style={{
                     border: '1px solid green',
                     textAlign: 'center'
                   }}
                 >
-                  <h3>{Number(reading.value).toFixed(0)}{reading.sensor.unit}</h3>
+                  <h3>
+                    {Number(reading.value).toFixed(0)}
+                    {reading.sensor.unit}
+                  </h3>
                 </Col>
               ))}
             </Row>

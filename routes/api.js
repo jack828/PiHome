@@ -1,6 +1,7 @@
 const pick = require('lodash.pick')
 const bodyParser = require('body-parser')
 const { ObjectId } = require('mongodb')
+const sub = require('date-fns/sub')
 
 module.exports = (serviceLocator, app) => {
   const { serviceDatabase } = serviceLocator
@@ -49,20 +50,32 @@ module.exports = (serviceLocator, app) => {
       .toArray()
 
     const getSensorReadings = (nodeId, sensor) =>
-      sensorCollections[sensor].findOne({ nodeId }, { createdDate: -1 })
+      sensorCollections[sensor].findOne(
+        {
+          nodeId,
+          createdDate: {
+            // No stale data thank you
+            $gte: sub(new Date(), { hours: 12 })
+          }
+        },
+        { createdDate: -1 }
+      )
     const nodeIds = nodes.map(({ nodeId }) => nodeId)
 
     const nodeReadings = await Promise.all(
       nodeIds.map(async nodeId => {
         const sensors = Object.keys(sensorCollections)
-        console.log({nodeId, sensors})
+        console.log({ nodeId, sensors })
         const sensorReadings = await Promise.all(
           sensors.map(sensor => getSensorReadings(nodeId, sensor))
         )
-        return sensors.reduce((readings, sensor, index) => ({
-          ...readings,
-          [sensor]: sensorReadings[index]
-        }), {})
+        return sensors.reduce(
+          (readings, sensor, index) => ({
+            ...readings,
+            [sensor]: sensorReadings[index]
+          }),
+          {}
+        )
       })
     )
     console.log(nodeReadings)

@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
   sensors: [
     { name: 'temperature', title: 'Temperature', unit: 'C', yMin: 20, yMax: 30 },
     { name: 'pressure', title: 'Pressure', unit: 'hPa' },
-    { name: 'humidity', title: 'Humidity', unit: '%' },
+    { name: 'humidity', title: 'Humidity', unit: '%RH' },
     { name: 'light', title: 'Light', unit: 'lux' }
   ],
   loading: {},
