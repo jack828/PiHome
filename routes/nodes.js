@@ -68,10 +68,11 @@ module.exports = (serviceLocator, app) => {
 
     // TODO identify if never seen node before
     // TODO error handling
+    const readingTime = new Date()
     const { insertedCount } = await sensorCollection.insertOne({
       nodeId,
       value,
-      createdDate: new Date()
+      createdDate: readingTime
     })
 
     if (insertedCount !== 1) {
@@ -80,7 +81,7 @@ module.exports = (serviceLocator, app) => {
     await nodes.findOneAndUpdate(
       { nodeId },
       {
-        $set: { lastReading: new Date() }
+        $set: { lastReading: readingTime }
       }
     )
     res.sendStatus(200)
