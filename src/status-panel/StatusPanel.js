@@ -32,7 +32,8 @@ const StatusPanel = ({ nodes, sensors, config }) => {
               {readings.map(({ value, sensor: { name, unit, precision } }) => (
                 <Col
                   key={`Status-Node-${nodeId.replace(/:/g, '')}-sensor-${name}`}
-                  xs="6"
+                  xs="12"
+                  md="6"
                   style={
                     {
                       // border: '1px solid #dfdfdf',
