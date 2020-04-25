@@ -16,7 +16,8 @@ const StatusPanel = ({ nodes, sensors, config }) => {
         return (
           <Col
             style={{
-              border: '1px solid #d8d8d8'
+              border: '1px solid #d8d8d8',
+              textAlign: 'center'
             }}
             key={`Status-Node-${nodeId.replace(/:/g, '')}`}
           >
@@ -32,10 +33,11 @@ const StatusPanel = ({ nodes, sensors, config }) => {
                 <Col
                   key={`Status-Node-${nodeId.replace(/:/g, '')}-sensor-${name}`}
                   xs="6"
-                  style={{
-                    // border: '1px solid #dfdfdf',
-                    textAlign: 'center'
-                  }}
+                  style={
+                    {
+                      // border: '1px solid #dfdfdf',
+                    }
+                  }
                 >
                   <h3>
                     {Number(value).toFixed(precision)}
