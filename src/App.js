@@ -16,31 +16,19 @@ const App = ({ sensors }) => {
         <Col xs={{ size: 12, order: 2 }} lg={{ size: 9, order: 1 }}>
           <Row>
             <Col xs="12" md="6">
-              <Chart
-                sensor="temperature"
-                {...sensors[0]}
-              />
+              <Chart sensor="temperature" {...sensors[0]} />
             </Col>
             <Col xs="12" md="6">
-              <Chart
-                sensor="pressure"
-                {...sensors[1]}
-              />
+              <Chart sensor="pressure" {...sensors[1]} />
             </Col>
           </Row>
 
           <Row>
             <Col xs="12" md="6">
-              <Chart
-                sensor="humidity"
-                {...sensors[2]}
-              />
+              <Chart sensor="humidity" {...sensors[2]} />
             </Col>
             <Col xs="12" md="6">
-              <Chart
-                sensor="light"
-                {...sensors[3]}
-              />
+              <Chart sensor="light" {...sensors[3]} />
             </Col>
           </Row>
         </Col>
