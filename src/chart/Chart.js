@@ -76,7 +76,7 @@ const Chart = ({
             />
             <CartesianGrid strokeDasharray="3 3" />
             <Legend verticalAlign="top" height={36} />
-            {nodes.map(node => (
+            {nodes && nodes.length > 0 && nodes.map(node => (
               <Line
                 connectNulls
                 key={node.nodeId}
