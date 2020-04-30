@@ -10,6 +10,7 @@ module.exports = (serviceLocator, app) => {
     temperature: serviceDatabase.collection('temperature'),
     humidity: serviceDatabase.collection('humidity'),
     pressure: serviceDatabase.collection('pressure'),
+    airQuality: serviceDatabase.collection('airQuality'),
     light: serviceDatabase.collection('light')
   }
 

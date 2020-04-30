@@ -28,7 +28,13 @@ const App = ({ sensors }) => {
               <Chart sensor="humidity" {...sensors[2]} />
             </Col>
             <Col xs="12" md="6">
-              <Chart sensor="light" {...sensors[3]} />
+              <Chart sensor="airQuality" {...sensors[3]} />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs="12" md="6">
+              <Chart sensor="light" {...sensors[4]} />
             </Col>
           </Row>
         </Col>

@@ -16,6 +16,7 @@ const initialState = Immutable.fromJS({
     },
     { name: 'pressure', title: 'Pressure', unit: 'hPa', precision: 0 },
     { name: 'humidity', title: 'Humidity', unit: '%RH', precision: 0 },
+    { name: 'airQuality', title: 'Air Quality', unit: '%', precision: 2 },
     { name: 'light', title: 'Light', unit: 'lux', precision: 0 }
   ],
   loading: {},
