@@ -51,16 +51,19 @@ module.exports = (serviceLocator, app) => {
       .toArray()
 
     const getSensorReadings = (nodeId, sensor) =>
-      sensorCollections[sensor]
-        .find({
-          nodeId,
-          createdDate: {
-            // No stale data thank you
-            $gte: sub(new Date(), { hours: 12 })
-          }
-        })
-        .sort({ createdDate: -1 })
-        .limit(1)
+      new Promise(async (resolve, reject) => {
+        const results = await sensorCollections[sensor]
+          .find({
+            nodeId,
+            createdDate: {
+              // No stale data thank you
+              $gte: sub(new Date(), { hours: 12 })
+            }
+          })
+          .sort({ createdDate: -1 })
+          .limit(1).toArray()
+        resolve(results[0])
+      })
 
     const nodeIds = nodes.map(({ nodeId }) => nodeId)
 
