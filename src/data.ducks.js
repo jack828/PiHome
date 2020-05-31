@@ -14,8 +14,9 @@ const initialState = Immutable.fromJS({
       yMin: 20,
       yMax: 30
     },
-    { name: 'pressure', title: 'Pressure', unit: 'hPa', precision: 0 },
     { name: 'humidity', title: 'Humidity', unit: '%RH', precision: 0 },
+    { name: 'soilMoisture', title: 'Soil Moisture', unit: '', precision: 0 },
+    { name: 'pressure', title: 'Pressure', unit: 'hPa', precision: 0 },
     { name: 'airQuality', title: 'Air Quality', unit: '%', precision: 2 },
     { name: 'light', title: 'Light', unit: 'lux', precision: 0 }
   ],

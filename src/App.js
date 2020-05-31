@@ -19,22 +19,25 @@ const App = ({ sensors }) => {
               <Chart sensor="temperature" {...sensors[0]} />
             </Col>
             <Col xs="12" md="6">
-              <Chart sensor="pressure" {...sensors[1]} />
+              <Chart sensor="humidity" {...sensors[1]} />
             </Col>
           </Row>
 
           <Row>
             <Col xs="12" md="6">
-              <Chart sensor="humidity" {...sensors[2]} />
+              <Chart sensor="soilMoisture" {...sensors[2]} />
             </Col>
             <Col xs="12" md="6">
-              <Chart sensor="airQuality" {...sensors[3]} />
+              <Chart sensor="pressure" {...sensors[3]} />
             </Col>
           </Row>
 
           <Row>
             <Col xs="12" md="6">
-              <Chart sensor="light" {...sensors[4]} />
+              <Chart sensor="airQuality" {...sensors[4]} />
+            </Col>
+            <Col xs="12" md="6">
+              <Chart sensor="light" {...sensors[5]} />
             </Col>
           </Row>
         </Col>
