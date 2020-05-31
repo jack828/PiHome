@@ -8,7 +8,8 @@ module.exports = (serviceLocator, app) => {
     humidity: serviceDatabase.collection('humidity'),
     pressure: serviceDatabase.collection('pressure'),
     airQuality: serviceDatabase.collection('airQuality'),
-    light: serviceDatabase.collection('light')
+    light: serviceDatabase.collection('light'),
+    soilMoisture: serviceDatabase.collection('soilMoisture')
   }
 
   app.get('/node/identify(/)?', async (req, res) => {
