@@ -71,7 +71,6 @@ module.exports = (serviceLocator, app) => {
     const nodeReadings = await Promise.all(
       nodeIds.map(async nodeId => {
         const sensors = Object.keys(sensorCollections)
-        console.log({ nodeId, sensors })
         const sensorReadings = await Promise.all(
           sensors.map(sensor => getSensorReadings(nodeId, sensor))
         )
@@ -84,7 +83,6 @@ module.exports = (serviceLocator, app) => {
         )
       })
     )
-    console.log(nodeReadings)
     res.json([
       ...nodes.map(node => ({
         ...node,
@@ -97,7 +95,6 @@ module.exports = (serviceLocator, app) => {
   app.post('/api/node', bodyParser.json(), async (req, res) => {
     // TODO schema!
     const { _id, ...nodeData } = req.body
-    console.log(_id, nodeData)
 
     const result = await nodeCollection.findOneAndUpdate(
       { _id: ObjectId(_id) },
@@ -105,7 +102,6 @@ module.exports = (serviceLocator, app) => {
         $set: nodeData
       }
     )
-    console.log(result)
     res.sendStatus(200)
   })
 }

@@ -32,7 +32,6 @@ const manifestConfig = () => ({
 
 module.exports = (serviceLocator, app) => {
   app.get('/manifest.json', async (req, res) => {
-    console.log('manifest req')
     res.json(manifestConfig({}))
   })
 }
