@@ -77,7 +77,9 @@ const Node = ({ data: node, onSave }) => {
           >
             {showUptime
               ? formatDuration(new Date(), new Date(node.lastIdentified))
-              : formatRelative(new Date(node.lastReading), new Date())}
+              : node.lastReading
+              ? formatRelative(new Date(node.lastReading), new Date())
+              : 'never'}
           </td>
           <td className="col-1">
             <FontAwesomeIcon icon="terminal" />
